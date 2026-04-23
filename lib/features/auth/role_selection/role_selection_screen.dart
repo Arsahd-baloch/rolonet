@@ -23,7 +23,9 @@ class RoleSelectionScreen extends StatelessWidget {
             children: [
               Text(
                 'Choose Your Role',
-                style: Theme.of(context).textTheme.displayLarge?.copyWith(fontSize: 28),
+                style: Theme.of(
+                  context,
+                ).textTheme.displayLarge?.copyWith(fontSize: 28),
               ),
               const SizedBox(height: 8),
               Text(
@@ -139,7 +141,9 @@ class _RoleCard extends StatelessWidget {
                   children: [
                     Text(
                       subtitle,
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 16),
+                      style: Theme.of(
+                        context,
+                      ).textTheme.titleLarge?.copyWith(fontSize: 16),
                     ),
                     const SizedBox(height: 4),
                     Text(

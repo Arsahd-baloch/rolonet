@@ -17,7 +17,11 @@ class DonorDashboardScreen extends StatelessWidget {
             color: const Color(0xFF1E40AF).withOpacity(0.1),
             shape: BoxShape.circle,
           ),
-          child: const Icon(Icons.lock_outline, color: Color(0xFF1E40AF), size: 28),
+          child: const Icon(
+            Icons.lock_outline,
+            color: Color(0xFF1E40AF),
+            size: 28,
+          ),
         ),
         title: const Text(
           'Login Required',
@@ -40,9 +44,14 @@ class DonorDashboardScreen extends StatelessWidget {
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 12),
                     side: const BorderSide(color: Color(0xFFE2E8F0)),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
-                  child: const Text('Cancel', style: TextStyle(color: Color(0xFF64748B))),
+                  child: const Text(
+                    'Cancel',
+                    style: TextStyle(color: Color(0xFF64748B)),
+                  ),
                 ),
               ),
               const SizedBox(width: 12),
@@ -57,9 +66,14 @@ class DonorDashboardScreen extends StatelessWidget {
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 12),
                     elevation: 0,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
-                  child: const Text('Login', style: TextStyle(fontWeight: FontWeight.w600)),
+                  child: const Text(
+                    'Login',
+                    style: TextStyle(fontWeight: FontWeight.w600),
+                  ),
                 ),
               ),
             ],
@@ -76,9 +90,11 @@ class DonorDashboardScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            _AppBar(onLoginTap: () {
-              // TODO: Navigate to Login screen
-            }),
+            _AppBar(
+              onLoginTap: () {
+                // TODO: Navigate to Login screen
+              },
+            ),
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
@@ -128,7 +144,11 @@ class _AppBar extends StatelessWidget {
             children: [
               Text(
                 'Donor Hub',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800, color: Color(0xFF1E293B)),
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w800,
+                  color: Color(0xFF1E293B),
+                ),
               ),
               Text(
                 'Support causes that matter',
@@ -142,7 +162,11 @@ class _AppBar extends StatelessWidget {
             onPressed: () {
               // TODO: Open search
             },
-            icon: const Icon(Icons.search_rounded, color: Color(0xFF64748B), size: 24),
+            icon: const Icon(
+              Icons.search_rounded,
+              color: Color(0xFF64748B),
+              size: 24,
+            ),
           ),
           const SizedBox(width: 4),
           // Login/Register button
@@ -153,8 +177,13 @@ class _AppBar extends StatelessWidget {
               foregroundColor: Colors.white,
               elevation: 0,
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-              textStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 12),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              textStyle: const TextStyle(
+                fontWeight: FontWeight.w700,
+                fontSize: 12,
+              ),
             ),
             child: const Text('Login'),
           ),
@@ -217,14 +246,21 @@ class _HeroSection extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 5,
+                        ),
                         decoration: BoxDecoration(
                           color: Colors.white.withOpacity(0.2),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: const Text(
                           'Make a Difference',
-                          style: TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.w600),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 11,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
                       const SizedBox(height: 12),
@@ -258,7 +294,11 @@ class _HeroSection extends StatelessWidget {
                     color: Colors.white.withOpacity(0.2),
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(Icons.volunteer_activism_rounded, color: Colors.white, size: 42),
+                  child: const Icon(
+                    Icons.volunteer_activism_rounded,
+                    color: Colors.white,
+                    size: 42,
+                  ),
                 ),
               ],
             ),
@@ -274,9 +314,24 @@ class _HeroSection extends StatelessWidget {
 // ─────────────────────────────────────────────
 class _ImpactSection extends StatelessWidget {
   static const _stats = [
-    {'value': '12,400', 'label': 'Lives Helped', 'icon': Icons.favorite_rounded, 'color': Color(0xFFEF4444)},
-    {'value': '340', 'label': 'Active Campaigns', 'icon': Icons.campaign_rounded, 'color': Color(0xFF3B82F6)},
-    {'value': 'PKR 8.2M', 'label': 'Total Donations', 'icon': Icons.attach_money_rounded, 'color': Color(0xFF10B981)},
+    {
+      'value': '12,400',
+      'label': 'Lives Helped',
+      'icon': Icons.favorite_rounded,
+      'color': Color(0xFFEF4444),
+    },
+    {
+      'value': '340',
+      'label': 'Active Campaigns',
+      'icon': Icons.campaign_rounded,
+      'color': Color(0xFF3B82F6),
+    },
+    {
+      'value': 'PKR 8.2M',
+      'label': 'Total Donations',
+      'icon': Icons.attach_money_rounded,
+      'color': Color(0xFF10B981),
+    },
   ];
 
   @override
@@ -286,7 +341,10 @@ class _ImpactSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const _SectionHeader(title: 'Your Impact Matters', subtitle: 'Collective donor contribution'),
+          const _SectionHeader(
+            title: 'Your Impact Matters',
+            subtitle: 'Collective donor contribution',
+          ),
           const SizedBox(height: 14),
           Row(
             children: (_stats as List<Map<String, dynamic>>)
@@ -320,7 +378,11 @@ class _StatCard extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             stat['value'] as String,
-            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800, color: Color(0xFF1E293B)),
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w800,
+              color: Color(0xFF1E293B),
+            ),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 3),
@@ -340,12 +402,42 @@ class _StatCard extends StatelessWidget {
 // ─────────────────────────────────────────────
 class _CategoriesSection extends StatelessWidget {
   static const _categories = [
-    {'title': 'Clothing', 'desc': 'Clothes, blankets, shoes', 'icon': Icons.checkroom_rounded, 'color': Color(0xFF8B5CF6)},
-    {'title': 'Food', 'desc': 'Packaged food, dry goods', 'icon': Icons.fastfood_rounded, 'color': Color(0xFF10B981)},
-    {'title': 'Furniture', 'desc': 'Beds, chairs, tables', 'icon': Icons.chair_rounded, 'color': Color(0xFFF59E0B)},
-    {'title': 'Money', 'desc': 'Financial support for campaigns', 'icon': Icons.attach_money_rounded, 'color': Color(0xFF3B82F6)},
-    {'title': 'Medical', 'desc': 'First aid, medicines', 'icon': Icons.medical_services_rounded, 'color': Color(0xFFEF4444)},
-    {'title': 'Other Items', 'desc': 'General donations', 'icon': Icons.category_rounded, 'color': Color(0xFF64748B)},
+    {
+      'title': 'Clothing',
+      'desc': 'Clothes, blankets, shoes',
+      'icon': Icons.checkroom_rounded,
+      'color': Color(0xFF8B5CF6),
+    },
+    {
+      'title': 'Food',
+      'desc': 'Packaged food, dry goods',
+      'icon': Icons.fastfood_rounded,
+      'color': Color(0xFF10B981),
+    },
+    {
+      'title': 'Furniture',
+      'desc': 'Beds, chairs, tables',
+      'icon': Icons.chair_rounded,
+      'color': Color(0xFFF59E0B),
+    },
+    {
+      'title': 'Money',
+      'desc': 'Financial support for campaigns',
+      'icon': Icons.attach_money_rounded,
+      'color': Color(0xFF3B82F6),
+    },
+    {
+      'title': 'Medical',
+      'desc': 'First aid, medicines',
+      'icon': Icons.medical_services_rounded,
+      'color': Color(0xFFEF4444),
+    },
+    {
+      'title': 'Other Items',
+      'desc': 'General donations',
+      'icon': Icons.category_rounded,
+      'color': Color(0xFF64748B),
+    },
   ];
 
   @override
@@ -355,7 +447,10 @@ class _CategoriesSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const _SectionHeader(title: 'Donation Categories', subtitle: 'Choose what you want to give'),
+          const _SectionHeader(
+            title: 'Donation Categories',
+            subtitle: 'Choose what you want to give',
+          ),
           const SizedBox(height: 14),
           GridView.builder(
             shrinkWrap: true,
@@ -413,7 +508,11 @@ class _CategoryCard extends StatelessWidget {
               const Spacer(),
               Text(
                 item['title'] as String,
-                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: Color(0xFF1E293B)),
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                  color: Color(0xFF1E293B),
+                ),
               ),
               const SizedBox(height: 3),
               Text(
@@ -484,7 +583,10 @@ class _FeaturedCampaignsSection extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.only(right: 16),
-            child: const _SectionHeader(title: 'Featured Campaigns', subtitle: 'Ongoing relief operations'),
+            child: const _SectionHeader(
+              title: 'Featured Campaigns',
+              subtitle: 'Ongoing relief operations',
+            ),
           ),
           const SizedBox(height: 14),
           SizedBox(
@@ -527,7 +629,11 @@ class _CampaignCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: const Color(0xFFE2E8F0)),
         boxShadow: const [
-          BoxShadow(color: Color(0x08000000), blurRadius: 8, offset: Offset(0, 2)),
+          BoxShadow(
+            color: Color(0x08000000),
+            blurRadius: 8,
+            offset: Offset(0, 2),
+          ),
         ],
       ),
       child: Column(
@@ -542,10 +648,16 @@ class _CampaignCard extends StatelessWidget {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(16),
+              ),
             ),
             child: Center(
-              child: Icon(campaign['icon'] as IconData, color: Colors.white, size: 38),
+              child: Icon(
+                campaign['icon'] as IconData,
+                color: Colors.white,
+                size: 38,
+              ),
             ),
           ),
           // Body
@@ -556,14 +668,21 @@ class _CampaignCard extends StatelessWidget {
               children: [
                 Text(
                   campaign['title'] as String,
-                  style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: Color(0xFF1E293B)),
+                  style: const TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xFF1E293B),
+                  ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 3),
                 Text(
                   campaign['ngo'] as String,
-                  style: const TextStyle(fontSize: 11, color: Color(0xFF94A3B8)),
+                  style: const TextStyle(
+                    fontSize: 11,
+                    color: Color(0xFF94A3B8),
+                  ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -580,7 +699,11 @@ class _CampaignCard extends StatelessWidget {
                 const SizedBox(height: 5),
                 Text(
                   '${(progress * 100).toInt()}% funded · ${campaign['raised']}',
-                  style: TextStyle(fontSize: 10, color: color, fontWeight: FontWeight.w600),
+                  style: TextStyle(
+                    fontSize: 10,
+                    color: color,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
                 const SizedBox(height: 10),
                 SizedBox(
@@ -592,8 +715,13 @@ class _CampaignCard extends StatelessWidget {
                       foregroundColor: Colors.white,
                       elevation: 0,
                       padding: const EdgeInsets.symmetric(vertical: 9),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                      textStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 12),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      textStyle: const TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 12,
+                      ),
                     ),
                     child: const Text('Donate'),
                   ),
@@ -620,9 +748,19 @@ class _SectionHeader extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w800, color: Color(0xFF1E293B))),
+        Text(
+          title,
+          style: const TextStyle(
+            fontSize: 17,
+            fontWeight: FontWeight.w800,
+            color: Color(0xFF1E293B),
+          ),
+        ),
         const SizedBox(height: 3),
-        Text(subtitle, style: const TextStyle(fontSize: 12, color: Color(0xFF64748B))),
+        Text(
+          subtitle,
+          style: const TextStyle(fontSize: 12, color: Color(0xFF64748B)),
+        ),
       ],
     );
   }

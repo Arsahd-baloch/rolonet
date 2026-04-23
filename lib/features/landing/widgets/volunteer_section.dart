@@ -14,14 +14,16 @@ class VolunteerSection extends StatelessWidget {
     },
     {
       'title': 'Food Distribution',
-      'desc': 'Assist in sorting, packing and distributing food to families in need.',
+      'desc':
+          'Assist in sorting, packing and distributing food to families in need.',
       'icon': Icons.soup_kitchen_rounded,
       'color': Color(0xFF10B981),
       'tag': 'Food Aid',
     },
     {
       'title': 'Emergency Response',
-      'desc': 'Be on call for urgent relief operations during natural disasters.',
+      'desc':
+          'Be on call for urgent relief operations during natural disasters.',
       'icon': Icons.emergency_rounded,
       'color': Color(0xFFEF4444),
       'tag': 'Urgent',
@@ -45,14 +47,28 @@ class VolunteerSection extends StatelessWidget {
                   color: const Color(0xFF8B5CF6).withOpacity(0.1),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: const Icon(Icons.people_rounded, color: Color(0xFF8B5CF6), size: 20),
+                child: const Icon(
+                  Icons.people_rounded,
+                  color: Color(0xFF8B5CF6),
+                  size: 20,
+                ),
               ),
               const SizedBox(width: 12),
               const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Volunteer Opportunities', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800, color: Color(0xFF1E293B))),
-                  Text('Make a difference today', style: TextStyle(fontSize: 13, color: Color(0xFF64748B))),
+                  Text(
+                    'Volunteer Opportunities',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w800,
+                      color: Color(0xFF1E293B),
+                    ),
+                  ),
+                  Text(
+                    'Make a difference today',
+                    style: TextStyle(fontSize: 13, color: Color(0xFF64748B)),
+                  ),
                 ],
               ),
             ],
@@ -73,8 +89,13 @@ class VolunteerSection extends StatelessWidget {
                 foregroundColor: Colors.white,
                 elevation: 0,
                 padding: const EdgeInsets.symmetric(vertical: 15),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                textStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                textStyle: const TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 15,
+                ),
               ),
             ),
           ),
@@ -120,18 +141,29 @@ class _TaskCard extends StatelessWidget {
                     Expanded(
                       child: Text(
                         task['title'] as String,
-                        style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: Color(0xFF1E293B)),
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w700,
+                          color: Color(0xFF1E293B),
+                        ),
                       ),
                     ),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 3,
+                      ),
                       decoration: BoxDecoration(
                         color: color.withOpacity(0.12),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Text(
                         task['tag'] as String,
-                        style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: color),
+                        style: TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.w600,
+                          color: color,
+                        ),
                       ),
                     ),
                   ],
@@ -139,7 +171,11 @@ class _TaskCard extends StatelessWidget {
                 const SizedBox(height: 6),
                 Text(
                   task['desc'] as String,
-                  style: const TextStyle(fontSize: 13, color: Color(0xFF64748B), height: 1.5),
+                  style: const TextStyle(
+                    fontSize: 13,
+                    color: Color(0xFF64748B),
+                    height: 1.5,
+                  ),
                 ),
               ],
             ),

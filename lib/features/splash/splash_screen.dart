@@ -78,10 +78,7 @@ class _SplashScreenState extends State<SplashScreen>
             builder: (context, child) {
               return FadeTransition(
                 opacity: _fadeAnim,
-                child: ScaleTransition(
-                  scale: _scaleAnim,
-                  child: child,
-                ),
+                child: ScaleTransition(scale: _scaleAnim, child: child),
               );
             },
             child: Column(
@@ -142,7 +139,9 @@ class _SplashScreenState extends State<SplashScreen>
                 // Loading indicator at bottom
                 const CircularProgressIndicator(
                   strokeWidth: 2.5,
-                  valueColor: AlwaysStoppedAnimation<Color>(AppTheme.primaryBlue),
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    AppTheme.primaryBlue,
+                  ),
                 ),
 
                 const SizedBox(height: 48),

@@ -5,10 +5,26 @@ class DonorSection extends StatelessWidget {
   const DonorSection({super.key});
 
   static const _items = [
-    {'label': 'Clothes', 'icon': Icons.checkroom_rounded, 'color': Color(0xFF8B5CF6)},
-    {'label': 'Food', 'icon': Icons.fastfood_rounded, 'color': Color(0xFF10B981)},
-    {'label': 'Furniture', 'icon': Icons.chair_rounded, 'color': Color(0xFFF59E0B)},
-    {'label': 'Money', 'icon': Icons.attach_money_rounded, 'color': Color(0xFF3B82F6)},
+    {
+      'label': 'Clothes',
+      'icon': Icons.checkroom_rounded,
+      'color': Color(0xFF8B5CF6),
+    },
+    {
+      'label': 'Food',
+      'icon': Icons.fastfood_rounded,
+      'color': Color(0xFF10B981),
+    },
+    {
+      'label': 'Furniture',
+      'icon': Icons.chair_rounded,
+      'color': Color(0xFFF59E0B),
+    },
+    {
+      'label': 'Money',
+      'icon': Icons.attach_money_rounded,
+      'color': Color(0xFF3B82F6),
+    },
   ];
 
   @override
@@ -28,14 +44,28 @@ class DonorSection extends StatelessWidget {
                   color: const Color(0xFF10B981).withOpacity(0.1),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: const Icon(Icons.volunteer_activism_rounded, color: Color(0xFF10B981), size: 20),
+                child: const Icon(
+                  Icons.volunteer_activism_rounded,
+                  color: Color(0xFF10B981),
+                  size: 20,
+                ),
               ),
               const SizedBox(width: 12),
               const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('What You Can Donate', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800, color: Color(0xFF1E293B))),
-                  Text('Every contribution counts', style: TextStyle(fontSize: 13, color: Color(0xFF64748B))),
+                  Text(
+                    'What You Can Donate',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w800,
+                      color: Color(0xFF1E293B),
+                    ),
+                  ),
+                  Text(
+                    'Every contribution counts',
+                    style: TextStyle(fontSize: 13, color: Color(0xFF64748B)),
+                  ),
                 ],
               ),
             ],
@@ -64,8 +94,13 @@ class DonorSection extends StatelessWidget {
                 foregroundColor: Colors.white,
                 elevation: 0,
                 padding: const EdgeInsets.symmetric(vertical: 15),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                textStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                textStyle: const TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 15,
+                ),
               ),
             ),
           ),
@@ -88,7 +123,11 @@ class _DonationItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(14),
         border: Border.all(color: const Color(0xFFE2E8F0)),
         boxShadow: const [
-          BoxShadow(color: Color(0x08000000), blurRadius: 8, offset: Offset(0, 2)),
+          BoxShadow(
+            color: Color(0x08000000),
+            blurRadius: 8,
+            offset: Offset(0, 2),
+          ),
         ],
       ),
       child: Column(
@@ -105,7 +144,11 @@ class _DonationItem extends StatelessWidget {
           const SizedBox(height: 12),
           Text(
             item['label'] as String,
-            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: Color(0xFF1E293B)),
+            style: const TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.w700,
+              color: Color(0xFF1E293B),
+            ),
           ),
         ],
       ),

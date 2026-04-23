@@ -48,7 +48,8 @@ class NgoDashboardScreen extends StatelessWidget {
   static const List<_Campaign> _campaigns = [
     _Campaign(
       title: 'Winter Relief 2025',
-      description: 'Distributing warm clothing and blankets to flood-affected families across Sindh.',
+      description:
+          'Distributing warm clothing and blankets to flood-affected families across Sindh.',
       progress: 0.72,
       status: CampaignStatus.active,
       color: Color(0xFF3B82F6),
@@ -56,7 +57,8 @@ class NgoDashboardScreen extends StatelessWidget {
     ),
     _Campaign(
       title: 'Emergency Food Drive',
-      description: 'Providing packaged food and dry rations to displaced communities in Balochistan.',
+      description:
+          'Providing packaged food and dry rations to displaced communities in Balochistan.',
       progress: 0.45,
       status: CampaignStatus.active,
       color: Color(0xFF10B981),
@@ -64,7 +66,8 @@ class NgoDashboardScreen extends StatelessWidget {
     ),
     _Campaign(
       title: 'Medical Aid — Spring',
-      description: 'Mobile medical camps providing free healthcare to rural communities.',
+      description:
+          'Mobile medical camps providing free healthcare to rural communities.',
       progress: 0.0,
       status: CampaignStatus.draft,
       color: Color(0xFF8B5CF6),
@@ -72,7 +75,8 @@ class NgoDashboardScreen extends StatelessWidget {
     ),
     _Campaign(
       title: 'Monsoon Shelter Project',
-      description: 'Temporary shelters for families displaced by the 2024 monsoon floods.',
+      description:
+          'Temporary shelters for families displaced by the 2024 monsoon floods.',
       progress: 1.0,
       status: CampaignStatus.closed,
       color: Color(0xFF64748B),
@@ -81,10 +85,34 @@ class NgoDashboardScreen extends StatelessWidget {
   ];
 
   static const List<_InventoryItem> _inventory = [
-    _InventoryItem(name: 'Blankets', quantity: 45, threshold: 50, unit: 'pieces', icon: Icons.airline_seat_individual_suite_rounded),
-    _InventoryItem(name: 'Food Packs', quantity: 120, threshold: 100, unit: 'packs', icon: Icons.inventory_2_rounded),
-    _InventoryItem(name: 'Medicines', quantity: 18, threshold: 30, unit: 'kits', icon: Icons.medical_services_outlined),
-    _InventoryItem(name: 'Water Bottles', quantity: 200, threshold: 150, unit: 'bottles', icon: Icons.water_drop_rounded),
+    _InventoryItem(
+      name: 'Blankets',
+      quantity: 45,
+      threshold: 50,
+      unit: 'pieces',
+      icon: Icons.airline_seat_individual_suite_rounded,
+    ),
+    _InventoryItem(
+      name: 'Food Packs',
+      quantity: 120,
+      threshold: 100,
+      unit: 'packs',
+      icon: Icons.inventory_2_rounded,
+    ),
+    _InventoryItem(
+      name: 'Medicines',
+      quantity: 18,
+      threshold: 30,
+      unit: 'kits',
+      icon: Icons.medical_services_outlined,
+    ),
+    _InventoryItem(
+      name: 'Water Bottles',
+      quantity: 200,
+      threshold: 150,
+      unit: 'bottles',
+      icon: Icons.water_drop_rounded,
+    ),
   ];
 
   @override
@@ -108,12 +136,18 @@ class NgoDashboardScreen extends StatelessWidget {
                     const _QuickActions(),
                     const SizedBox(height: 24),
                     // Campaigns section
-                    const _SectionHeader(title: 'My Campaigns', subtitle: 'Active and draft campaigns'),
+                    const _SectionHeader(
+                      title: 'My Campaigns',
+                      subtitle: 'Active and draft campaigns',
+                    ),
                     const SizedBox(height: 12),
                     ..._campaigns.map((c) => _CampaignCard(campaign: c)),
                     const SizedBox(height: 24),
                     // Inventory section
-                    const _SectionHeader(title: 'Inventory Management', subtitle: 'Track your aid stock levels'),
+                    const _SectionHeader(
+                      title: 'Inventory Management',
+                      subtitle: 'Track your aid stock levels',
+                    ),
                     const SizedBox(height: 12),
                     const _InventorySection(),
                     const SizedBox(height: 24),
@@ -149,7 +183,11 @@ class _Header extends StatelessWidget {
             children: [
               Text(
                 'NGO Dashboard',
-                style: TextStyle(fontSize: 19, fontWeight: FontWeight.w800, color: Color(0xFF1E293B)),
+                style: TextStyle(
+                  fontSize: 19,
+                  fontWeight: FontWeight.w800,
+                  color: Color(0xFF1E293B),
+                ),
               ),
               Text(
                 'Manage campaigns and resources',
@@ -165,9 +203,15 @@ class _Header extends StatelessWidget {
             decoration: BoxDecoration(
               color: const Color(0xFF1E40AF).withOpacity(0.1),
               shape: BoxShape.circle,
-              border: Border.all(color: const Color(0xFF1E40AF).withOpacity(0.2)),
+              border: Border.all(
+                color: const Color(0xFF1E40AF).withOpacity(0.2),
+              ),
             ),
-            child: const Icon(Icons.domain_rounded, color: Color(0xFF1E40AF), size: 22),
+            child: const Icon(
+              Icons.domain_rounded,
+              color: Color(0xFF1E40AF),
+              size: 22,
+            ),
           ),
         ],
       ),
@@ -191,10 +235,30 @@ class _StatsRow extends StatelessWidget {
       mainAxisSpacing: 10,
       childAspectRatio: 1.6,
       children: const [
-        _StatCard(label: 'Total Campaigns', value: '12', icon: Icons.campaign_rounded, color: Color(0xFF3B82F6)),
-        _StatCard(label: 'Active Campaigns', value: '4', icon: Icons.play_circle_rounded, color: Color(0xFF10B981)),
-        _StatCard(label: 'Donations Received', value: 'PKR 2.4M', icon: Icons.attach_money_rounded, color: Color(0xFFF59E0B)),
-        _StatCard(label: 'Inventory Items', value: '383', icon: Icons.inventory_rounded, color: Color(0xFF8B5CF6)),
+        _StatCard(
+          label: 'Total Campaigns',
+          value: '12',
+          icon: Icons.campaign_rounded,
+          color: Color(0xFF3B82F6),
+        ),
+        _StatCard(
+          label: 'Active Campaigns',
+          value: '4',
+          icon: Icons.play_circle_rounded,
+          color: Color(0xFF10B981),
+        ),
+        _StatCard(
+          label: 'Donations Received',
+          value: 'PKR 2.4M',
+          icon: Icons.attach_money_rounded,
+          color: Color(0xFFF59E0B),
+        ),
+        _StatCard(
+          label: 'Inventory Items',
+          value: '383',
+          icon: Icons.inventory_rounded,
+          color: Color(0xFF8B5CF6),
+        ),
       ],
     );
   }
@@ -240,12 +304,19 @@ class _StatCard extends StatelessWidget {
               children: [
                 Text(
                   value,
-                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Color(0xFF1E293B)),
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w800,
+                    color: Color(0xFF1E293B),
+                  ),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   label,
-                  style: const TextStyle(fontSize: 10, color: Color(0xFF64748B)),
+                  style: const TextStyle(
+                    fontSize: 10,
+                    color: Color(0xFF64748B),
+                  ),
                   maxLines: 2,
                 ),
               ],
@@ -268,7 +339,10 @@ class _QuickActions extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const _SectionHeader(title: 'Quick Actions', subtitle: 'Common management tasks'),
+        const _SectionHeader(
+          title: 'Quick Actions',
+          subtitle: 'Common management tasks',
+        ),
         const SizedBox(height: 12),
         Row(
           children: [
@@ -344,7 +418,11 @@ class _ActionButton extends StatelessWidget {
               const SizedBox(height: 6),
               Text(
                 label,
-                style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: color),
+                style: TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w700,
+                  color: color,
+                ),
                 textAlign: TextAlign.center,
               ),
             ],
@@ -364,17 +442,23 @@ class _CampaignCard extends StatelessWidget {
 
   Color get _statusColor {
     switch (campaign.status) {
-      case CampaignStatus.active: return const Color(0xFF10B981);
-      case CampaignStatus.draft:  return const Color(0xFFF59E0B);
-      case CampaignStatus.closed: return const Color(0xFF94A3B8);
+      case CampaignStatus.active:
+        return const Color(0xFF10B981);
+      case CampaignStatus.draft:
+        return const Color(0xFFF59E0B);
+      case CampaignStatus.closed:
+        return const Color(0xFF94A3B8);
     }
   }
 
   String get _statusLabel {
     switch (campaign.status) {
-      case CampaignStatus.active: return 'ACTIVE';
-      case CampaignStatus.draft:  return 'DRAFT';
-      case CampaignStatus.closed: return 'CLOSED';
+      case CampaignStatus.active:
+        return 'ACTIVE';
+      case CampaignStatus.draft:
+        return 'DRAFT';
+      case CampaignStatus.closed:
+        return 'CLOSED';
     }
   }
 
@@ -386,7 +470,13 @@ class _CampaignCard extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(14),
         border: Border.all(color: const Color(0xFFE2E8F0)),
-        boxShadow: const [BoxShadow(color: Color(0x08000000), blurRadius: 6, offset: Offset(0, 2))],
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x08000000),
+            blurRadius: 6,
+            offset: Offset(0, 2),
+          ),
+        ],
       ),
       child: Column(
         children: [
@@ -400,7 +490,9 @@ class _CampaignCard extends StatelessWidget {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(14)),
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(14),
+              ),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -412,7 +504,10 @@ class _CampaignCard extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(12),
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 5,
+                    ),
                     decoration: BoxDecoration(
                       color: Colors.white.withOpacity(0.2),
                       borderRadius: BorderRadius.circular(20),
@@ -420,7 +515,12 @@ class _CampaignCard extends StatelessWidget {
                     ),
                     child: Text(
                       _statusLabel,
-                      style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w800, letterSpacing: 0.5),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 10,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: 0.5,
+                      ),
                     ),
                   ),
                 ),
@@ -435,12 +535,20 @@ class _CampaignCard extends StatelessWidget {
               children: [
                 Text(
                   campaign.title,
-                  style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: Color(0xFF1E293B)),
+                  style: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xFF1E293B),
+                  ),
                 ),
                 const SizedBox(height: 6),
                 Text(
                   campaign.description,
-                  style: const TextStyle(fontSize: 13, color: Color(0xFF64748B), height: 1.5),
+                  style: const TextStyle(
+                    fontSize: 13,
+                    color: Color(0xFF64748B),
+                    height: 1.5,
+                  ),
                 ),
                 const SizedBox(height: 12),
                 // Progress bar
@@ -453,14 +561,20 @@ class _CampaignCard extends StatelessWidget {
                           value: campaign.progress,
                           minHeight: 6,
                           backgroundColor: const Color(0xFFE2E8F0),
-                          valueColor: AlwaysStoppedAnimation<Color>(campaign.color),
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            campaign.color,
+                          ),
                         ),
                       ),
                     ),
                     const SizedBox(width: 10),
                     Text(
                       '${(campaign.progress * 100).toInt()}%',
-                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: campaign.color),
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w700,
+                        color: campaign.color,
+                      ),
                     ),
                   ],
                 ),
@@ -481,8 +595,13 @@ class _CampaignCard extends StatelessWidget {
                             foregroundColor: const Color(0xFF1E40AF),
                             side: const BorderSide(color: Color(0xFFBFDBFE)),
                             padding: const EdgeInsets.symmetric(vertical: 9),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                            textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            textStyle: const TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 12,
+                            ),
                           ),
                         ),
                       ),
@@ -498,8 +617,13 @@ class _CampaignCard extends StatelessWidget {
                             foregroundColor: const Color(0xFF64748B),
                             side: const BorderSide(color: Color(0xFFE2E8F0)),
                             padding: const EdgeInsets.symmetric(vertical: 9),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                            textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            textStyle: const TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 12,
+                            ),
                           ),
                         ),
                       ),
@@ -515,8 +639,13 @@ class _CampaignCard extends StatelessWidget {
                             foregroundColor: const Color(0xFFEF4444),
                             side: const BorderSide(color: Color(0xFFFECACA)),
                             padding: const EdgeInsets.symmetric(vertical: 9),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                            textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            textStyle: const TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 12,
+                            ),
                           ),
                         ),
                       ),
@@ -539,10 +668,34 @@ class _InventorySection extends StatelessWidget {
   const _InventorySection();
 
   static const List<_InventoryItem> _items = [
-    _InventoryItem(name: 'Blankets', quantity: 45, threshold: 50, unit: 'pieces', icon: Icons.airline_seat_individual_suite_rounded),
-    _InventoryItem(name: 'Food Packs', quantity: 120, threshold: 100, unit: 'packs', icon: Icons.inventory_2_rounded),
-    _InventoryItem(name: 'Medicines', quantity: 18, threshold: 30, unit: 'kits', icon: Icons.medical_services_outlined),
-    _InventoryItem(name: 'Water Bottles', quantity: 200, threshold: 150, unit: 'bottles', icon: Icons.water_drop_rounded),
+    _InventoryItem(
+      name: 'Blankets',
+      quantity: 45,
+      threshold: 50,
+      unit: 'pieces',
+      icon: Icons.airline_seat_individual_suite_rounded,
+    ),
+    _InventoryItem(
+      name: 'Food Packs',
+      quantity: 120,
+      threshold: 100,
+      unit: 'packs',
+      icon: Icons.inventory_2_rounded,
+    ),
+    _InventoryItem(
+      name: 'Medicines',
+      quantity: 18,
+      threshold: 30,
+      unit: 'kits',
+      icon: Icons.medical_services_outlined,
+    ),
+    _InventoryItem(
+      name: 'Water Bottles',
+      quantity: 200,
+      threshold: 150,
+      unit: 'bottles',
+      icon: Icons.water_drop_rounded,
+    ),
   ];
 
   @override
@@ -561,7 +714,12 @@ class _InventorySection extends StatelessWidget {
             children: [
               _InventoryRow(item: item),
               if (i < _items.length - 1)
-                const Divider(color: Color(0xFFF1F5F9), height: 1, indent: 16, endIndent: 16),
+                const Divider(
+                  color: Color(0xFFF1F5F9),
+                  height: 1,
+                  indent: 16,
+                  endIndent: 16,
+                ),
             ],
           );
         }).toList(),
@@ -591,7 +749,9 @@ class _InventoryRow extends StatelessWidget {
             child: Icon(
               item.icon,
               size: 20,
-              color: item.isLowStock ? const Color(0xFFEF4444) : const Color(0xFF10B981),
+              color: item.isLowStock
+                  ? const Color(0xFFEF4444)
+                  : const Color(0xFF10B981),
             ),
           ),
           const SizedBox(width: 14),
@@ -599,9 +759,22 @@ class _InventoryRow extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(item.name, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Color(0xFF1E293B))),
+                Text(
+                  item.name,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFF1E293B),
+                  ),
+                ),
                 const SizedBox(height: 2),
-                Text('${item.quantity} ${item.unit}', style: const TextStyle(fontSize: 12, color: Color(0xFF64748B))),
+                Text(
+                  '${item.quantity} ${item.unit}',
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: Color(0xFF64748B),
+                  ),
+                ),
               ],
             ),
           ),
@@ -612,16 +785,26 @@ class _InventoryRow extends StatelessWidget {
               decoration: BoxDecoration(
                 color: const Color(0xFFEF4444).withOpacity(0.1),
                 borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: const Color(0xFFEF4444).withOpacity(0.3)),
+                border: Border.all(
+                  color: const Color(0xFFEF4444).withOpacity(0.3),
+                ),
               ),
               child: const Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.warning_amber_rounded, color: Color(0xFFEF4444), size: 12),
+                  Icon(
+                    Icons.warning_amber_rounded,
+                    color: Color(0xFFEF4444),
+                    size: 12,
+                  ),
                   SizedBox(width: 4),
                   Text(
                     'Low Stock',
-                    style: TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: Color(0xFFEF4444)),
+                    style: TextStyle(
+                      fontSize: 10,
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xFFEF4444),
+                    ),
                   ),
                 ],
               ),
@@ -635,7 +818,11 @@ class _InventoryRow extends StatelessWidget {
               ),
               child: const Text(
                 'In Stock',
-                style: TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: Color(0xFF10B981)),
+                style: TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w700,
+                  color: Color(0xFF10B981),
+                ),
               ),
             ),
         ],
@@ -655,7 +842,10 @@ class _ReportPreview extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const _SectionHeader(title: 'Reports Preview', subtitle: 'Quick analytics snapshot'),
+        const _SectionHeader(
+          title: 'Reports Preview',
+          subtitle: 'Quick analytics snapshot',
+        ),
         const SizedBox(height: 12),
         Row(
           children: [
@@ -672,9 +862,23 @@ class _ReportPreview extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Donations Trend', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: Color(0xFF1E293B))),
+                    const Text(
+                      'Donations Trend',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w700,
+                        color: Color(0xFF1E293B),
+                      ),
+                    ),
                     const SizedBox(height: 4),
-                    const Text('↑ 23% this month', style: TextStyle(fontSize: 11, color: Color(0xFF10B981), fontWeight: FontWeight.w600)),
+                    const Text(
+                      '↑ 23% this month',
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: Color(0xFF10B981),
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                     const Spacer(),
                     // Mock bar chart
                     Row(
@@ -709,9 +913,23 @@ class _ReportPreview extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Campaign Success', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: Color(0xFF1E293B))),
+                    const Text(
+                      'Campaign Success',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w700,
+                        color: Color(0xFF1E293B),
+                      ),
+                    ),
                     const SizedBox(height: 4),
-                    const Text('75% completion rate', style: TextStyle(fontSize: 11, color: Color(0xFF10B981), fontWeight: FontWeight.w600)),
+                    const Text(
+                      '75% completion rate',
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: Color(0xFF10B981),
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                     const Spacer(),
                     // Mock donut placeholder
                     Center(
@@ -725,10 +943,19 @@ class _ReportPreview extends StatelessWidget {
                               value: 0.75,
                               strokeWidth: 7,
                               backgroundColor: const Color(0xFFE2E8F0),
-                              valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF10B981)),
+                              valueColor: const AlwaysStoppedAnimation<Color>(
+                                Color(0xFF10B981),
+                              ),
                             ),
                           ),
-                          const Text('75%', style: TextStyle(fontSize: 10, fontWeight: FontWeight.w800, color: Color(0xFF1E293B))),
+                          const Text(
+                            '75%',
+                            style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.w800,
+                              color: Color(0xFF1E293B),
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -756,9 +983,19 @@ class _SectionHeader extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w800, color: Color(0xFF1E293B))),
+        Text(
+          title,
+          style: const TextStyle(
+            fontSize: 17,
+            fontWeight: FontWeight.w800,
+            color: Color(0xFF1E293B),
+          ),
+        ),
         const SizedBox(height: 3),
-        Text(subtitle, style: const TextStyle(fontSize: 12, color: Color(0xFF64748B))),
+        Text(
+          subtitle,
+          style: const TextStyle(fontSize: 12, color: Color(0xFF64748B)),
+        ),
       ],
     );
   }

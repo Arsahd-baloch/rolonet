@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 // ─── Mock Data Model ────────────────────────
 enum TaskStatus { pending, inProgress, completed, rejected }
+
 enum TaskPriority { low, medium, high }
 
 class _Task {
@@ -29,7 +30,8 @@ class VolunteerDashboardScreen extends StatefulWidget {
   const VolunteerDashboardScreen({super.key});
 
   @override
-  State<VolunteerDashboardScreen> createState() => _VolunteerDashboardScreenState();
+  State<VolunteerDashboardScreen> createState() =>
+      _VolunteerDashboardScreenState();
 }
 
 class _VolunteerDashboardScreenState extends State<VolunteerDashboardScreen> {
@@ -44,7 +46,8 @@ class _VolunteerDashboardScreenState extends State<VolunteerDashboardScreen> {
     _Task(
       id: '1',
       title: 'Food Package Delivery',
-      description: 'Deliver 50 food packages to displaced families at the relief camp.',
+      description:
+          'Deliver 50 food packages to displaced families at the relief camp.',
       location: 'Karachi Relief Camp, Sindh',
       priority: TaskPriority.high,
       status: TaskStatus.inProgress,
@@ -52,7 +55,8 @@ class _VolunteerDashboardScreenState extends State<VolunteerDashboardScreen> {
     _Task(
       id: '2',
       title: 'Blanket Distribution',
-      description: 'Distribute blankets and warm clothing to flood victims in Zone 3.',
+      description:
+          'Distribute blankets and warm clothing to flood victims in Zone 3.',
       location: 'Sukkur Flood Zone, Sindh',
       priority: TaskPriority.medium,
       status: TaskStatus.pending,
@@ -60,7 +64,8 @@ class _VolunteerDashboardScreenState extends State<VolunteerDashboardScreen> {
     _Task(
       id: '3',
       title: 'Medical Camp Assistance',
-      description: 'Assist the medical team in registering patients and managing crowd.',
+      description:
+          'Assist the medical team in registering patients and managing crowd.',
       location: 'Quetta Medical Camp, Balochistan',
       priority: TaskPriority.high,
       status: TaskStatus.pending,
@@ -77,8 +82,10 @@ class _VolunteerDashboardScreenState extends State<VolunteerDashboardScreen> {
 
   // Stats computed from task list
   int get assignedCount => _tasks.length;
-  int get completedCount => _tasks.where((t) => t.status == TaskStatus.completed).length;
-  int get pendingCount => _tasks.where((t) => t.status == TaskStatus.pending).length;
+  int get completedCount =>
+      _tasks.where((t) => t.status == TaskStatus.completed).length;
+  int get pendingCount =>
+      _tasks.where((t) => t.status == TaskStatus.pending).length;
 
   void _acceptTask(String id) {
     setState(() {
@@ -138,12 +145,14 @@ class _VolunteerDashboardScreenState extends State<VolunteerDashboardScreen> {
                       subtitle: 'Your current mission list',
                     ),
                     const SizedBox(height: 12),
-                    ..._tasks.map((task) => _TaskCard(
-                          task: task,
-                          onAccept: () => _acceptTask(task.id),
-                          onReject: () => _rejectTask(task.id),
-                          onComplete: () => _completeTask(task.id),
-                        )),
+                    ..._tasks.map(
+                      (task) => _TaskCard(
+                        task: task,
+                        onAccept: () => _acceptTask(task.id),
+                        onReject: () => _rejectTask(task.id),
+                        onComplete: () => _completeTask(task.id),
+                      ),
+                    ),
                     const SizedBox(height: 16),
                   ],
                 ),
@@ -182,7 +191,11 @@ class _DisasterBanner extends StatelessWidget {
               color: Colors.white.withOpacity(0.2),
               borderRadius: BorderRadius.circular(8),
             ),
-            child: const Icon(Icons.warning_amber_rounded, color: Colors.white, size: 20),
+            child: const Icon(
+              Icons.warning_amber_rounded,
+              color: Colors.white,
+              size: 20,
+            ),
           ),
           const SizedBox(width: 12),
           const Expanded(
@@ -214,7 +227,12 @@ class _DisasterBanner extends StatelessWidget {
             ),
             child: const Text(
               'LIVE',
-              style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w800, letterSpacing: 1),
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 10,
+                fontWeight: FontWeight.w800,
+                letterSpacing: 1,
+              ),
             ),
           ),
         ],
@@ -244,7 +262,11 @@ class _Header extends StatelessWidget {
             children: [
               Text(
                 'Volunteer Dashboard',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: Color(0xFF1E293B)),
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w800,
+                  color: Color(0xFF1E293B),
+                ),
               ),
               Text(
                 'Manage your missions',
@@ -262,7 +284,9 @@ class _Header extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 11,
                   fontWeight: FontWeight.w700,
-                  color: isAvailable ? const Color(0xFF10B981) : const Color(0xFF94A3B8),
+                  color: isAvailable
+                      ? const Color(0xFF10B981)
+                      : const Color(0xFF94A3B8),
                 ),
               ),
               Transform.scale(
@@ -359,10 +383,17 @@ class _StatCard extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             value,
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800, color: Color(0xFF1E293B)),
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w800,
+              color: Color(0xFF1E293B),
+            ),
           ),
           const SizedBox(height: 3),
-          Text(label, style: const TextStyle(fontSize: 11, color: Color(0xFF64748B))),
+          Text(
+            label,
+            style: const TextStyle(fontSize: 11, color: Color(0xFF64748B)),
+          ),
         ],
       ),
     );
@@ -387,42 +418,57 @@ class _TaskCard extends StatelessWidget {
 
   Color get _statusColor {
     switch (task.status) {
-      case TaskStatus.pending:     return const Color(0xFF94A3B8);
-      case TaskStatus.inProgress:  return const Color(0xFF3B82F6);
-      case TaskStatus.completed:   return const Color(0xFF10B981);
-      case TaskStatus.rejected:    return const Color(0xFFEF4444);
+      case TaskStatus.pending:
+        return const Color(0xFF94A3B8);
+      case TaskStatus.inProgress:
+        return const Color(0xFF3B82F6);
+      case TaskStatus.completed:
+        return const Color(0xFF10B981);
+      case TaskStatus.rejected:
+        return const Color(0xFFEF4444);
     }
   }
 
   String get _statusLabel {
     switch (task.status) {
-      case TaskStatus.pending:     return 'PENDING';
-      case TaskStatus.inProgress:  return 'IN PROGRESS';
-      case TaskStatus.completed:   return 'COMPLETED';
-      case TaskStatus.rejected:    return 'REJECTED';
+      case TaskStatus.pending:
+        return 'PENDING';
+      case TaskStatus.inProgress:
+        return 'IN PROGRESS';
+      case TaskStatus.completed:
+        return 'COMPLETED';
+      case TaskStatus.rejected:
+        return 'REJECTED';
     }
   }
 
   Color get _priorityColor {
     switch (task.priority) {
-      case TaskPriority.low:    return const Color(0xFF10B981);
-      case TaskPriority.medium: return const Color(0xFFF59E0B);
-      case TaskPriority.high:   return const Color(0xFFEF4444);
+      case TaskPriority.low:
+        return const Color(0xFF10B981);
+      case TaskPriority.medium:
+        return const Color(0xFFF59E0B);
+      case TaskPriority.high:
+        return const Color(0xFFEF4444);
     }
   }
 
   String get _priorityLabel {
     switch (task.priority) {
-      case TaskPriority.low:    return 'LOW';
-      case TaskPriority.medium: return 'MEDIUM';
-      case TaskPriority.high:   return 'HIGH';
+      case TaskPriority.low:
+        return 'LOW';
+      case TaskPriority.medium:
+        return 'MEDIUM';
+      case TaskPriority.high:
+        return 'HIGH';
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final bool isRejectedOrCompleted =
-        task.status == TaskStatus.rejected || task.status == TaskStatus.completed;
+        task.status == TaskStatus.rejected ||
+        task.status == TaskStatus.completed;
 
     return Container(
       margin: const EdgeInsets.only(bottom: 14),
@@ -435,7 +481,11 @@ class _TaskCard extends StatelessWidget {
               : const Color(0xFFE2E8F0),
         ),
         boxShadow: const [
-          BoxShadow(color: Color(0x08000000), blurRadius: 6, offset: Offset(0, 2)),
+          BoxShadow(
+            color: Color(0x08000000),
+            blurRadius: 6,
+            offset: Offset(0, 2),
+          ),
         ],
       ),
       child: Column(
@@ -447,7 +497,9 @@ class _TaskCard extends StatelessWidget {
               height: 3,
               decoration: BoxDecoration(
                 color: const Color(0xFFEF4444),
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(14)),
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(14),
+                ),
               ),
             ),
 
@@ -472,7 +524,10 @@ class _TaskCard extends StatelessWidget {
                     const SizedBox(width: 8),
                     // Status badge
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
                       decoration: BoxDecoration(
                         color: _statusColor.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(20),
@@ -494,29 +549,45 @@ class _TaskCard extends StatelessWidget {
                 // Description
                 Text(
                   task.description,
-                  style: const TextStyle(fontSize: 13, color: Color(0xFF64748B), height: 1.5),
+                  style: const TextStyle(
+                    fontSize: 13,
+                    color: Color(0xFF64748B),
+                    height: 1.5,
+                  ),
                 ),
                 const SizedBox(height: 10),
 
                 // Location + Priority row
                 Row(
                   children: [
-                    const Icon(Icons.location_on_outlined, size: 14, color: Color(0xFF94A3B8)),
+                    const Icon(
+                      Icons.location_on_outlined,
+                      size: 14,
+                      color: Color(0xFF94A3B8),
+                    ),
                     const SizedBox(width: 4),
                     Expanded(
                       child: Text(
                         task.location,
-                        style: const TextStyle(fontSize: 12, color: Color(0xFF94A3B8)),
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Color(0xFF94A3B8),
+                        ),
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     // Priority badge
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 3,
+                      ),
                       decoration: BoxDecoration(
                         color: _priorityColor.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: _priorityColor.withOpacity(0.3)),
+                        border: Border.all(
+                          color: _priorityColor.withOpacity(0.3),
+                        ),
                       ),
                       child: Text(
                         _priorityLabel,
@@ -549,8 +620,13 @@ class _TaskCard extends StatelessWidget {
                               foregroundColor: Colors.white,
                               elevation: 0,
                               padding: const EdgeInsets.symmetric(vertical: 10),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                              textStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              textStyle: const TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 13,
+                              ),
                             ),
                           ),
                         ),
@@ -565,8 +641,13 @@ class _TaskCard extends StatelessWidget {
                               foregroundColor: Colors.white,
                               elevation: 0,
                               padding: const EdgeInsets.symmetric(vertical: 10),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                              textStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              textStyle: const TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 13,
+                              ),
                             ),
                           ),
                         ),
@@ -581,8 +662,13 @@ class _TaskCard extends StatelessWidget {
                             foregroundColor: const Color(0xFFEF4444),
                             side: const BorderSide(color: Color(0xFFEF4444)),
                             padding: const EdgeInsets.symmetric(vertical: 10),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                            textStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            textStyle: const TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 13,
+                            ),
                           ),
                         ),
                       ),
@@ -595,11 +681,19 @@ class _TaskCard extends StatelessWidget {
                   const SizedBox(height: 10),
                   Row(
                     children: [
-                      const Icon(Icons.check_circle_rounded, color: Color(0xFF10B981), size: 16),
+                      const Icon(
+                        Icons.check_circle_rounded,
+                        color: Color(0xFF10B981),
+                        size: 16,
+                      ),
                       const SizedBox(width: 6),
                       Text(
                         'Task completed successfully',
-                        style: const TextStyle(fontSize: 12, color: Color(0xFF10B981), fontWeight: FontWeight.w600),
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Color(0xFF10B981),
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ],
                   ),
@@ -608,11 +702,19 @@ class _TaskCard extends StatelessWidget {
                   const SizedBox(height: 10),
                   Row(
                     children: [
-                      const Icon(Icons.cancel_rounded, color: Color(0xFFEF4444), size: 16),
+                      const Icon(
+                        Icons.cancel_rounded,
+                        color: Color(0xFFEF4444),
+                        size: 16,
+                      ),
                       const SizedBox(width: 6),
                       Text(
                         'Task rejected',
-                        style: const TextStyle(fontSize: 12, color: Color(0xFFEF4444), fontWeight: FontWeight.w600),
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Color(0xFFEF4444),
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ],
                   ),
@@ -639,9 +741,19 @@ class _SectionHeader extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w800, color: Color(0xFF1E293B))),
+        Text(
+          title,
+          style: const TextStyle(
+            fontSize: 17,
+            fontWeight: FontWeight.w800,
+            color: Color(0xFF1E293B),
+          ),
+        ),
         const SizedBox(height: 3),
-        Text(subtitle, style: const TextStyle(fontSize: 12, color: Color(0xFF64748B))),
+        Text(
+          subtitle,
+          style: const TextStyle(fontSize: 12, color: Color(0xFF64748B)),
+        ),
       ],
     );
   }

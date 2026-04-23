@@ -50,7 +50,10 @@ class HeroSection extends StatelessWidget {
               children: [
                 // Badge
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 6,
+                  ),
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.15),
                     borderRadius: BorderRadius.circular(20),
@@ -59,11 +62,19 @@ class HeroSection extends StatelessWidget {
                   child: const Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(Icons.favorite_rounded, color: Colors.white, size: 14),
+                      Icon(
+                        Icons.favorite_rounded,
+                        color: Colors.white,
+                        size: 14,
+                      ),
                       SizedBox(width: 6),
                       Text(
                         'Humanitarian Aid Platform',
-                        style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w500),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ],
                   ),
@@ -104,8 +115,13 @@ class HeroSection extends StatelessWidget {
                           foregroundColor: const Color(0xFF1E40AF),
                           elevation: 0,
                           padding: const EdgeInsets.symmetric(vertical: 14),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                          textStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          textStyle: const TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 14,
+                          ),
                         ),
                       ),
                     ),
@@ -117,10 +133,18 @@ class HeroSection extends StatelessWidget {
                         label: const Text('Be a Volunteer'),
                         style: OutlinedButton.styleFrom(
                           foregroundColor: Colors.white,
-                          side: const BorderSide(color: Colors.white, width: 1.5),
+                          side: const BorderSide(
+                            color: Colors.white,
+                            width: 1.5,
+                          ),
                           padding: const EdgeInsets.symmetric(vertical: 14),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                          textStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          textStyle: const TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 14,
+                          ),
                         ),
                       ),
                     ),
@@ -155,9 +179,19 @@ class _StatItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(value, style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w800)),
+        Text(
+          value,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.w800,
+          ),
+        ),
         const SizedBox(height: 2),
-        Text(label, style: TextStyle(color: Colors.white.withOpacity(0.7), fontSize: 12)),
+        Text(
+          label,
+          style: TextStyle(color: Colors.white.withOpacity(0.7), fontSize: 12),
+        ),
       ],
     );
   }

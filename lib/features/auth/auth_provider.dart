@@ -13,12 +13,7 @@ class AuthState {
   final String? token;
   final Map<String, dynamic>? user;
 
-  AuthState({
-    this.isLoading = false,
-    this.error,
-    this.token,
-    this.user,
-  });
+  AuthState({this.isLoading = false, this.error, this.token, this.user});
 
   AuthState copyWith({
     bool? isLoading,
@@ -81,5 +76,41 @@ class AuthNotifier extends Notifier<AuthState> {
     }
   }
 
-  // To be implemented: login, logout, getMe
+  // ================= LOGIN SECTION =================
+  Future<bool> login({required String email, required String password}) async {
+    state = state.copyWith(isLoading: true, error: null);
+
+    try {
+      final response = await http.post(
+        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.login}'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'email': email, 'password': password}),
+      );
+
+      final data = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        state = state.copyWith(
+          isLoading: false,
+          token: data['token'],
+          user: data['user'],
+        );
+        return true;
+      } else {
+        state = state.copyWith(
+          isLoading: false,
+          error: data['message'] ?? 'Login failed',
+        );
+        return false;
+      }
+    } catch (e) {
+      state = state.copyWith(
+        isLoading: false,
+        error: 'Network error: ${e.toString()}',
+      );
+      return false;
+    }
+  }
+
+  // To be implemented: logout, getMe
 }

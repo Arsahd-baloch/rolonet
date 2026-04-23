@@ -42,7 +42,11 @@ class _Header extends StatelessWidget {
       decoration: const BoxDecoration(
         color: Colors.white,
         boxShadow: [
-          BoxShadow(color: Color(0x0D000000), blurRadius: 6, offset: Offset(0, 2)),
+          BoxShadow(
+            color: Color(0x0D000000),
+            blurRadius: 6,
+            offset: Offset(0, 2),
+          ),
         ],
       ),
       child: Row(
@@ -56,7 +60,11 @@ class _Header extends StatelessWidget {
                   color: const Color(0xFF1E40AF),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: const Icon(Icons.favorite_rounded, color: Colors.white, size: 18),
+                child: const Icon(
+                  Icons.favorite_rounded,
+                  color: Colors.white,
+                  size: 18,
+                ),
               ),
               const SizedBox(width: 10),
               const Column(
@@ -73,7 +81,11 @@ class _Header extends StatelessWidget {
                   ),
                   Text(
                     'Connecting Aid. Delivering Hope.',
-                    style: TextStyle(fontSize: 10, color: Color(0xFF64748B), fontWeight: FontWeight.w400),
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: Color(0xFF64748B),
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ],
               ),
@@ -87,7 +99,10 @@ class _Header extends StatelessWidget {
               foregroundColor: AppTheme.primaryBlue,
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             ),
-            child: const Text('Login', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 13)),
+            child: const Text(
+              'Login',
+              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 13),
+            ),
           ),
           const SizedBox(width: 4),
           // Register button
@@ -98,8 +113,13 @@ class _Header extends StatelessWidget {
               foregroundColor: Colors.white,
               elevation: 0,
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-              textStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              textStyle: const TextStyle(
+                fontWeight: FontWeight.w700,
+                fontSize: 13,
+              ),
             ),
             child: const Text('Register'),
           ),
@@ -137,9 +157,16 @@ class _HeroSection extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.white.withOpacity(0.15),
               shape: BoxShape.circle,
-              border: Border.all(color: Colors.white.withOpacity(0.3), width: 2),
+              border: Border.all(
+                color: Colors.white.withOpacity(0.3),
+                width: 2,
+              ),
             ),
-            child: const Icon(Icons.volunteer_activism_rounded, color: Colors.white, size: 50),
+            child: const Icon(
+              Icons.volunteer_activism_rounded,
+              color: Colors.white,
+              size: 50,
+            ),
           ),
           const SizedBox(height: 24),
           // Description
@@ -180,9 +207,19 @@ class _HeroStat extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(value, style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w800)),
+        Text(
+          value,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 18,
+            fontWeight: FontWeight.w800,
+          ),
+        ),
         const SizedBox(height: 2),
-        Text(label, style: TextStyle(color: Colors.white.withOpacity(0.7), fontSize: 12)),
+        Text(
+          label,
+          style: TextStyle(color: Colors.white.withOpacity(0.7), fontSize: 12),
+        ),
       ],
     );
   }
@@ -215,7 +252,11 @@ class _RoleSectionTitle extends StatelessWidget {
         children: [
           Text(
             'Choose Your Role',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800, color: Color(0xFF1E293B)),
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w800,
+              color: Color(0xFF1E293B),
+            ),
           ),
           SizedBox(height: 4),
           Text(
@@ -330,7 +371,11 @@ class _RoleCard extends StatelessWidget {
                     const SizedBox(height: 4),
                     Text(
                       description,
-                      style: const TextStyle(fontSize: 13, color: Color(0xFF64748B), height: 1.4),
+                      style: const TextStyle(
+                        fontSize: 13,
+                        color: Color(0xFF64748B),
+                        height: 1.4,
+                      ),
                     ),
                   ],
                 ),
@@ -372,19 +417,31 @@ class _AboutSection extends StatelessWidget {
                   color: const Color(0xFFF59E0B).withOpacity(0.1),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: const Icon(Icons.info_outline_rounded, color: Color(0xFFF59E0B), size: 20),
+                child: const Icon(
+                  Icons.info_outline_rounded,
+                  color: Color(0xFFF59E0B),
+                  size: 20,
+                ),
               ),
               const SizedBox(width: 12),
               const Text(
                 'About ReliefNet',
-                style: TextStyle(fontSize: 17, fontWeight: FontWeight.w800, color: Color(0xFF1E293B)),
+                style: TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.w800,
+                  color: Color(0xFF1E293B),
+                ),
               ),
             ],
           ),
           const SizedBox(height: 14),
           const Text(
             'ReliefNet is a humanitarian aid platform designed to improve transparency, coordination, and delivery of support.',
-            style: TextStyle(fontSize: 14, color: Color(0xFF475569), height: 1.65),
+            style: TextStyle(
+              fontSize: 14,
+              color: Color(0xFF475569),
+              height: 1.65,
+            ),
           ),
         ],
       ),
@@ -408,17 +465,27 @@ class _Footer extends StatelessWidget {
         children: [
           const Text(
             'ReliefNet',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Colors.white),
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w800,
+              color: Colors.white,
+            ),
           ),
           const SizedBox(height: 6),
           Text(
             'Connecting Aid. Delivering Hope.',
-            style: TextStyle(fontSize: 12, color: Colors.white.withOpacity(0.6)),
+            style: TextStyle(
+              fontSize: 12,
+              color: Colors.white.withOpacity(0.6),
+            ),
           ),
           const SizedBox(height: 16),
           Text(
             '© 2025 ReliefNet. All rights reserved.',
-            style: TextStyle(fontSize: 11, color: Colors.white.withOpacity(0.4)),
+            style: TextStyle(
+              fontSize: 11,
+              color: Colors.white.withOpacity(0.4),
+            ),
           ),
         ],
       ),

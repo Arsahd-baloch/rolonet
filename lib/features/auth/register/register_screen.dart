@@ -32,15 +32,35 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   Map<String, dynamic> get _roleConfig {
     switch (widget.role.toLowerCase()) {
       case 'ngo':
-        return {'label': 'NGO', 'color': AppTheme.secondaryBlue, 'icon': Icons.business_center_rounded};
+        return {
+          'label': 'NGO',
+          'color': AppTheme.secondaryBlue,
+          'icon': Icons.business_center_rounded,
+        };
       case 'donor':
-        return {'label': 'Donor', 'color': AppTheme.successGreen, 'icon': Icons.volunteer_activism_rounded};
+        return {
+          'label': 'Donor',
+          'color': AppTheme.successGreen,
+          'icon': Icons.volunteer_activism_rounded,
+        };
       case 'volunteer':
-        return {'label': 'Volunteer', 'color': const Color(0xFF8B5CF6), 'icon': Icons.people_rounded};
+        return {
+          'label': 'Volunteer',
+          'color': const Color(0xFF8B5CF6),
+          'icon': Icons.people_rounded,
+        };
       case 'beneficiary':
-        return {'label': 'Beneficiary', 'color': AppTheme.errorRed, 'icon': Icons.health_and_safety_rounded};
+        return {
+          'label': 'Beneficiary',
+          'color': AppTheme.errorRed,
+          'icon': Icons.health_and_safety_rounded,
+        };
       default:
-        return {'label': 'User', 'color': AppTheme.primaryBlue, 'icon': Icons.person_outline};
+        return {
+          'label': 'User',
+          'color': AppTheme.primaryBlue,
+          'icon': Icons.person_outline,
+        };
     }
   }
 
@@ -69,7 +89,10 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
               children: [
                 // Role badge
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 14,
+                    vertical: 10,
+                  ),
                   decoration: BoxDecoration(
                     color: roleColor.withOpacity(0.08),
                     borderRadius: BorderRadius.circular(12),
@@ -105,7 +128,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     hintText: 'Enter your full name',
                     prefixIcon: Icon(Icons.person_outline, size: 20),
                   ),
-                  validator: (v) => (v == null || v.isEmpty) ? 'Full name is required' : null,
+                  validator: (v) =>
+                      (v == null || v.isEmpty) ? 'Full name is required' : null,
                 ),
                 const SizedBox(height: 16),
 
@@ -118,7 +142,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     hintText: 'Enter your email',
                     prefixIcon: Icon(Icons.email_outlined, size: 20),
                   ),
-                  validator: (v) => (v == null || v.isEmpty) ? 'Email is required' : null,
+                  validator: (v) =>
+                      (v == null || v.isEmpty) ? 'Email is required' : null,
                 ),
                 const SizedBox(height: 16),
 
@@ -132,14 +157,17 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     prefixIcon: const Icon(Icons.lock_outline, size: 20),
                     suffixIcon: IconButton(
                       icon: Icon(
-                        _obscure ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+                        _obscure
+                            ? Icons.visibility_off_outlined
+                            : Icons.visibility_outlined,
                         color: AppTheme.textLight,
                         size: 20,
                       ),
                       onPressed: () => setState(() => _obscure = !_obscure),
                     ),
                   ),
-                  validator: (v) => (v == null || v.length < 6) ? 'Min 6 characters' : null,
+                  validator: (v) =>
+                      (v == null || v.length < 6) ? 'Min 6 characters' : null,
                 ),
                 const SizedBox(height: 16),
 
@@ -151,7 +179,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     hintText: 'Enter your phone number',
                     prefixIcon: Icon(Icons.phone_outlined, size: 20),
                   ),
-                  validator: (v) => (v == null || v.isEmpty) ? 'Phone number is required' : null,
+                  validator: (v) => (v == null || v.isEmpty)
+                      ? 'Phone number is required'
+                      : null,
                 ),
 
                 // ── ROLE-SPECIFIC FIELDS ───────────────────
@@ -167,7 +197,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       hintText: 'Enter organization name',
                       prefixIcon: Icon(Icons.domain_rounded, size: 20),
                     ),
-                    validator: (v) => (v == null || v.isEmpty) ? 'Organization name is required' : null,
+                    validator: (v) => (v == null || v.isEmpty)
+                        ? 'Organization name is required'
+                        : null,
                   ),
                   const SizedBox(height: 16),
                   const _FieldLabel(text: 'Registration Number'),
@@ -177,7 +209,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       hintText: 'Enter registration number',
                       prefixIcon: Icon(Icons.badge_outlined, size: 20),
                     ),
-                    validator: (v) => (v == null || v.isEmpty) ? 'Registration number is required' : null,
+                    validator: (v) => (v == null || v.isEmpty)
+                        ? 'Registration number is required'
+                        : null,
                   ),
                 ],
 
@@ -187,7 +221,10 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   TextFormField(
                     decoration: const InputDecoration(
                       hintText: 'e.g. Money, Food, Clothes',
-                      prefixIcon: Icon(Icons.favorite_outline_rounded, size: 20),
+                      prefixIcon: Icon(
+                        Icons.favorite_outline_rounded,
+                        size: 20,
+                      ),
                     ),
                   ),
                 ],
@@ -200,7 +237,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       hintText: 'e.g. First Aid, Driving, Logistics',
                       prefixIcon: Icon(Icons.build_outlined, size: 20),
                     ),
-                    validator: (v) => (v == null || v.isEmpty) ? 'Please enter at least one skill' : null,
+                    validator: (v) => (v == null || v.isEmpty)
+                        ? 'Please enter at least one skill'
+                        : null,
                   ),
                 ],
 
@@ -214,7 +253,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       prefixIcon: Icon(Icons.location_on_outlined, size: 20),
                       alignLabelWithHint: true,
                     ),
-                    validator: (v) => (v == null || v.isEmpty) ? 'Address is required' : null,
+                    validator: (v) =>
+                        (v == null || v.isEmpty) ? 'Address is required' : null,
                   ),
                 ],
 
@@ -244,7 +284,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                             ? null
                             : () async {
                                 if (_formKey.currentState!.validate()) {
-                                  final success = await ref.read(authProvider.notifier).register(
+                                  final success = await ref
+                                      .read(authProvider.notifier)
+                                      .register(
                                         name: _nameController.text.trim(),
                                         email: _emailController.text.trim(),
                                         password: _passwordController.text,
@@ -254,7 +296,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                                   if (success && context.mounted) {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(
-                                        content: Text('Registration successful! Please log in.'),
+                                        content: Text(
+                                          'Registration successful! Please log in.',
+                                        ),
                                         backgroundColor: AppTheme.successGreen,
                                       ),
                                     );
@@ -271,7 +315,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                                 width: 20,
                                 child: CircularProgressIndicator(
                                   strokeWidth: 2,
-                                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    Colors.white,
+                                  ),
                                 ),
                               )
                             : Text('Register as $roleLabel'),

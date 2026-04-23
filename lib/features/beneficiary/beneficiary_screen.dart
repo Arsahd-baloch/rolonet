@@ -41,19 +41,65 @@ class BeneficiaryScreen extends StatefulWidget {
 
 class _BeneficiaryScreenState extends State<BeneficiaryScreen> {
   static const List<_Category> _categories = [
-    _Category(title: 'Food Assistance', description: 'Packaged food, dry rations & meal kits', icon: Icons.fastfood_rounded, color: Color(0xFF10B981)),
-    _Category(title: 'Medical Help', description: 'First aid, medicines & health support', icon: Icons.medical_services_rounded, color: Color(0xFFEF4444)),
-    _Category(title: 'Shelter Support', description: 'Temporary housing & emergency shelter', icon: Icons.home_rounded, color: Color(0xFF3B82F6)),
-    _Category(title: 'Clothing Aid', description: 'Clothes, blankets & warm wear', icon: Icons.checkroom_rounded, color: Color(0xFF8B5CF6)),
-    _Category(title: 'Financial Support', description: 'Emergency funds & financial relief', icon: Icons.attach_money_rounded, color: Color(0xFFF59E0B)),
-    _Category(title: 'Emergency Relief', description: 'Urgent multi-category disaster aid', icon: Icons.emergency_rounded, color: Color(0xFFDC2626)),
+    _Category(
+      title: 'Food Assistance',
+      description: 'Packaged food, dry rations & meal kits',
+      icon: Icons.fastfood_rounded,
+      color: Color(0xFF10B981),
+    ),
+    _Category(
+      title: 'Medical Help',
+      description: 'First aid, medicines & health support',
+      icon: Icons.medical_services_rounded,
+      color: Color(0xFFEF4444),
+    ),
+    _Category(
+      title: 'Shelter Support',
+      description: 'Temporary housing & emergency shelter',
+      icon: Icons.home_rounded,
+      color: Color(0xFF3B82F6),
+    ),
+    _Category(
+      title: 'Clothing Aid',
+      description: 'Clothes, blankets & warm wear',
+      icon: Icons.checkroom_rounded,
+      color: Color(0xFF8B5CF6),
+    ),
+    _Category(
+      title: 'Financial Support',
+      description: 'Emergency funds & financial relief',
+      icon: Icons.attach_money_rounded,
+      color: Color(0xFFF59E0B),
+    ),
+    _Category(
+      title: 'Emergency Relief',
+      description: 'Urgent multi-category disaster aid',
+      icon: Icons.emergency_rounded,
+      color: Color(0xFFDC2626),
+    ),
   ];
 
   static const List<_HelpRequest> _myRequests = [
-    _HelpRequest(type: 'Food Assistance', status: RequestStatus.approved, date: '18 Apr 2025'),
-    _HelpRequest(type: 'Clothing Aid', status: RequestStatus.pending, date: '19 Apr 2025'),
-    _HelpRequest(type: 'Medical Help', status: RequestStatus.completed, date: '10 Apr 2025'),
-    _HelpRequest(type: 'Shelter Support', status: RequestStatus.rejected, date: '5 Apr 2025'),
+    _HelpRequest(
+      type: 'Food Assistance',
+      status: RequestStatus.approved,
+      date: '18 Apr 2025',
+    ),
+    _HelpRequest(
+      type: 'Clothing Aid',
+      status: RequestStatus.pending,
+      date: '19 Apr 2025',
+    ),
+    _HelpRequest(
+      type: 'Medical Help',
+      status: RequestStatus.completed,
+      date: '10 Apr 2025',
+    ),
+    _HelpRequest(
+      type: 'Shelter Support',
+      status: RequestStatus.rejected,
+      date: '5 Apr 2025',
+    ),
   ];
 
   void _openRequestForm(BuildContext context, String categoryTitle) {
@@ -89,16 +135,18 @@ class _BeneficiaryScreenState extends State<BeneficiaryScreen> {
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: _categories.length,
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 12,
-                        mainAxisSpacing: 12,
-                        childAspectRatio: 0.85,
-                      ),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 12,
+                            mainAxisSpacing: 12,
+                            childAspectRatio: 0.85,
+                          ),
                       itemBuilder: (context, i) {
                         return _CategoryCard(
                           category: _categories[i],
-                          onRequestTap: () => _openRequestForm(context, _categories[i].title),
+                          onRequestTap: () =>
+                              _openRequestForm(context, _categories[i].title),
                         );
                       },
                     ),
@@ -140,7 +188,11 @@ class _Header extends StatelessWidget {
             children: [
               Text(
                 'Beneficiary Support',
-                style: TextStyle(fontSize: 19, fontWeight: FontWeight.w800, color: Color(0xFF1E293B)),
+                style: TextStyle(
+                  fontSize: 19,
+                  fontWeight: FontWeight.w800,
+                  color: Color(0xFF1E293B),
+                ),
               ),
               Text(
                 'Request and track assistance',
@@ -156,9 +208,15 @@ class _Header extends StatelessWidget {
             decoration: BoxDecoration(
               color: const Color(0xFFEF4444).withOpacity(0.1),
               shape: BoxShape.circle,
-              border: Border.all(color: const Color(0xFFEF4444).withOpacity(0.2)),
+              border: Border.all(
+                color: const Color(0xFFEF4444).withOpacity(0.2),
+              ),
             ),
-            child: const Icon(Icons.person_outline_rounded, color: Color(0xFFEF4444), size: 22),
+            child: const Icon(
+              Icons.person_outline_rounded,
+              color: Color(0xFFEF4444),
+              size: 22,
+            ),
           ),
         ],
       ),
@@ -182,7 +240,13 @@ class _CategoryCard extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(14),
         border: Border.all(color: const Color(0xFFE2E8F0)),
-        boxShadow: const [BoxShadow(color: Color(0x08000000), blurRadius: 6, offset: Offset(0, 2))],
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x08000000),
+            blurRadius: 6,
+            offset: Offset(0, 2),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -193,7 +257,9 @@ class _CategoryCard extends StatelessWidget {
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
               color: category.color.withOpacity(0.08),
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(14)),
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(14),
+              ),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -209,12 +275,20 @@ class _CategoryCard extends StatelessWidget {
                 const SizedBox(height: 10),
                 Text(
                   category.title,
-                  style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: Color(0xFF1E293B)),
+                  style: const TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xFF1E293B),
+                  ),
                 ),
                 const SizedBox(height: 3),
                 Text(
                   category.description,
-                  style: const TextStyle(fontSize: 10, color: Color(0xFF94A3B8), height: 1.4),
+                  style: const TextStyle(
+                    fontSize: 10,
+                    color: Color(0xFF94A3B8),
+                    height: 1.4,
+                  ),
                   maxLines: 2,
                 ),
               ],
@@ -232,8 +306,13 @@ class _CategoryCard extends StatelessWidget {
                   foregroundColor: Colors.white,
                   elevation: 0,
                   padding: const EdgeInsets.symmetric(vertical: 9),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                  textStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  textStyle: const TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 12,
+                  ),
                 ),
                 child: const Text('Request Help'),
               ),
@@ -295,17 +374,28 @@ class _RequestFormModalState extends State<_RequestFormModal> {
               // Title
               Row(
                 children: [
-                  const Icon(Icons.help_outline_rounded, color: Color(0xFF1E40AF), size: 22),
+                  const Icon(
+                    Icons.help_outline_rounded,
+                    color: Color(0xFF1E40AF),
+                    size: 22,
+                  ),
                   const SizedBox(width: 10),
                   Expanded(
                     child: Text(
                       'Request: ${widget.categoryTitle}',
-                      style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w800, color: Color(0xFF1E293B)),
+                      style: const TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w800,
+                        color: Color(0xFF1E293B),
+                      ),
                     ),
                   ),
                   IconButton(
                     onPressed: () => Navigator.of(context).pop(),
-                    icon: const Icon(Icons.close_rounded, color: Color(0xFF94A3B8)),
+                    icon: const Icon(
+                      Icons.close_rounded,
+                      color: Color(0xFF94A3B8),
+                    ),
                   ),
                 ],
               ),
@@ -315,8 +405,12 @@ class _RequestFormModalState extends State<_RequestFormModal> {
               _FieldLabel(text: 'Full Name'),
               const SizedBox(height: 8),
               TextFormField(
-                decoration: _inputDeco('Enter your full name', Icons.person_outline),
-                validator: (v) => (v == null || v.isEmpty) ? 'Full name is required' : null,
+                decoration: _inputDeco(
+                  'Enter your full name',
+                  Icons.person_outline,
+                ),
+                validator: (v) =>
+                    (v == null || v.isEmpty) ? 'Full name is required' : null,
               ),
               const SizedBox(height: 14),
 
@@ -325,8 +419,13 @@ class _RequestFormModalState extends State<_RequestFormModal> {
               const SizedBox(height: 8),
               TextFormField(
                 keyboardType: TextInputType.phone,
-                decoration: _inputDeco('Enter your phone number', Icons.phone_outlined),
-                validator: (v) => (v == null || v.isEmpty) ? 'Phone number is required' : null,
+                decoration: _inputDeco(
+                  'Enter your phone number',
+                  Icons.phone_outlined,
+                ),
+                validator: (v) => (v == null || v.isEmpty)
+                    ? 'Phone number is required'
+                    : null,
               ),
               const SizedBox(height: 14),
 
@@ -335,8 +434,12 @@ class _RequestFormModalState extends State<_RequestFormModal> {
               const SizedBox(height: 8),
               TextFormField(
                 maxLines: 2,
-                decoration: _inputDeco('Enter your address', Icons.location_on_outlined),
-                validator: (v) => (v == null || v.isEmpty) ? 'Address is required' : null,
+                decoration: _inputDeco(
+                  'Enter your address',
+                  Icons.location_on_outlined,
+                ),
+                validator: (v) =>
+                    (v == null || v.isEmpty) ? 'Address is required' : null,
               ),
               const SizedBox(height: 14),
 
@@ -345,8 +448,13 @@ class _RequestFormModalState extends State<_RequestFormModal> {
               const SizedBox(height: 8),
               TextFormField(
                 maxLines: 3,
-                decoration: _inputDeco('Describe what you need...', Icons.description_outlined),
-                validator: (v) => (v == null || v.isEmpty) ? 'Please describe your need' : null,
+                decoration: _inputDeco(
+                  'Describe what you need...',
+                  Icons.description_outlined,
+                ),
+                validator: (v) => (v == null || v.isEmpty)
+                    ? 'Please describe your need'
+                    : null,
               ),
               const SizedBox(height: 14),
 
@@ -359,8 +467,8 @@ class _RequestFormModalState extends State<_RequestFormModal> {
                   final Color pColor = p == 'High'
                       ? const Color(0xFFEF4444)
                       : p == 'Medium'
-                          ? const Color(0xFFF59E0B)
-                          : const Color(0xFF10B981);
+                      ? const Color(0xFFF59E0B)
+                      : const Color(0xFF10B981);
                   return Expanded(
                     child: GestureDetector(
                       onTap: () => setState(() => _selectedPriority = p),
@@ -368,7 +476,9 @@ class _RequestFormModalState extends State<_RequestFormModal> {
                         margin: EdgeInsets.only(right: p != 'High' ? 8 : 0),
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         decoration: BoxDecoration(
-                          color: selected ? pColor.withOpacity(0.12) : const Color(0xFFF8FAFC),
+                          color: selected
+                              ? pColor.withOpacity(0.12)
+                              : const Color(0xFFF8FAFC),
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(
                             color: selected ? pColor : const Color(0xFFE2E8F0),
@@ -408,8 +518,13 @@ class _RequestFormModalState extends State<_RequestFormModal> {
                     foregroundColor: Colors.white,
                     elevation: 0,
                     padding: const EdgeInsets.symmetric(vertical: 14),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                    textStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    textStyle: const TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 15,
+                    ),
                   ),
                 ),
               ),
@@ -428,11 +543,26 @@ class _RequestFormModalState extends State<_RequestFormModal> {
       filled: true,
       fillColor: const Color(0xFFF8FAFC),
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Color(0xFFE2E8F0))),
-      enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Color(0xFFE2E8F0))),
-      focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Color(0xFF1E40AF), width: 1.5)),
-      errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Color(0xFFEF4444))),
-      focusedErrorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Color(0xFFEF4444), width: 1.5)),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: const BorderSide(color: Color(0xFF1E40AF), width: 1.5),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: const BorderSide(color: Color(0xFFEF4444)),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: const BorderSide(color: Color(0xFFEF4444), width: 1.5),
+      ),
     );
   }
 }
@@ -446,28 +576,40 @@ class _RequestItem extends StatelessWidget {
 
   Color get _statusColor {
     switch (request.status) {
-      case RequestStatus.pending:   return const Color(0xFFF59E0B);
-      case RequestStatus.approved:  return const Color(0xFF3B82F6);
-      case RequestStatus.rejected:  return const Color(0xFFEF4444);
-      case RequestStatus.completed: return const Color(0xFF10B981);
+      case RequestStatus.pending:
+        return const Color(0xFFF59E0B);
+      case RequestStatus.approved:
+        return const Color(0xFF3B82F6);
+      case RequestStatus.rejected:
+        return const Color(0xFFEF4444);
+      case RequestStatus.completed:
+        return const Color(0xFF10B981);
     }
   }
 
   String get _statusLabel {
     switch (request.status) {
-      case RequestStatus.pending:   return 'PENDING';
-      case RequestStatus.approved:  return 'APPROVED';
-      case RequestStatus.rejected:  return 'REJECTED';
-      case RequestStatus.completed: return 'COMPLETED';
+      case RequestStatus.pending:
+        return 'PENDING';
+      case RequestStatus.approved:
+        return 'APPROVED';
+      case RequestStatus.rejected:
+        return 'REJECTED';
+      case RequestStatus.completed:
+        return 'COMPLETED';
     }
   }
 
   IconData get _statusIcon {
     switch (request.status) {
-      case RequestStatus.pending:   return Icons.hourglass_empty_rounded;
-      case RequestStatus.approved:  return Icons.thumb_up_rounded;
-      case RequestStatus.rejected:  return Icons.cancel_rounded;
-      case RequestStatus.completed: return Icons.check_circle_rounded;
+      case RequestStatus.pending:
+        return Icons.hourglass_empty_rounded;
+      case RequestStatus.approved:
+        return Icons.thumb_up_rounded;
+      case RequestStatus.rejected:
+        return Icons.cancel_rounded;
+      case RequestStatus.completed:
+        return Icons.check_circle_rounded;
     }
   }
 
@@ -480,7 +622,13 @@ class _RequestItem extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: const Color(0xFFE2E8F0)),
-        boxShadow: const [BoxShadow(color: Color(0x06000000), blurRadius: 4, offset: Offset(0, 1))],
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x06000000),
+            blurRadius: 4,
+            offset: Offset(0, 1),
+          ),
+        ],
       ),
       child: Row(
         children: [
@@ -501,12 +649,19 @@ class _RequestItem extends StatelessWidget {
               children: [
                 Text(
                   request.type,
-                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: Color(0xFF1E293B)),
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xFF1E293B),
+                  ),
                 ),
                 const SizedBox(height: 3),
                 Text(
                   request.date,
-                  style: const TextStyle(fontSize: 12, color: Color(0xFF94A3B8)),
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: Color(0xFF94A3B8),
+                  ),
                 ),
               ],
             ),
@@ -521,7 +676,12 @@ class _RequestItem extends StatelessWidget {
             ),
             child: Text(
               _statusLabel,
-              style: TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: _statusColor, letterSpacing: 0.3),
+              style: TextStyle(
+                fontSize: 10,
+                fontWeight: FontWeight.w700,
+                color: _statusColor,
+                letterSpacing: 0.3,
+              ),
             ),
           ),
         ],
@@ -543,9 +703,19 @@ class _SectionHeader extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w800, color: Color(0xFF1E293B))),
+        Text(
+          title,
+          style: const TextStyle(
+            fontSize: 17,
+            fontWeight: FontWeight.w800,
+            color: Color(0xFF1E293B),
+          ),
+        ),
         const SizedBox(height: 3),
-        Text(subtitle, style: const TextStyle(fontSize: 12, color: Color(0xFF64748B))),
+        Text(
+          subtitle,
+          style: const TextStyle(fontSize: 12, color: Color(0xFF64748B)),
+        ),
       ],
     );
   }
@@ -559,7 +729,11 @@ class _FieldLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Color(0xFF374151)),
+      style: const TextStyle(
+        fontSize: 13,
+        fontWeight: FontWeight.w600,
+        color: Color(0xFF374151),
+      ),
     );
   }
 }

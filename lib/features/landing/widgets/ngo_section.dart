@@ -51,14 +51,28 @@ class NgoSection extends StatelessWidget {
                   color: const Color(0xFF1E40AF).withOpacity(0.1),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: const Icon(Icons.business_center_rounded, color: Color(0xFF1E40AF), size: 20),
+                child: const Icon(
+                  Icons.business_center_rounded,
+                  color: Color(0xFF1E40AF),
+                  size: 20,
+                ),
               ),
               const SizedBox(width: 12),
               const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('NGO Operations', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800, color: Color(0xFF1E293B))),
-                  Text('Active relief campaigns', style: TextStyle(fontSize: 13, color: Color(0xFF64748B))),
+                  Text(
+                    'NGO Operations',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w800,
+                      color: Color(0xFF1E293B),
+                    ),
+                  ),
+                  Text(
+                    'Active relief campaigns',
+                    style: TextStyle(fontSize: 13, color: Color(0xFF64748B)),
+                  ),
                 ],
               ),
             ],
@@ -100,16 +114,25 @@ class _CampaignCard extends StatelessWidget {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(14)),
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(14),
+              ),
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(campaign['icon'] as IconData, color: Colors.white, size: 40),
+                Icon(
+                  campaign['icon'] as IconData,
+                  color: Colors.white,
+                  size: 40,
+                ),
                 const SizedBox(height: 6),
                 Text(
                   campaign['location'] as String,
-                  style: TextStyle(color: Colors.white.withOpacity(0.9), fontSize: 12),
+                  style: TextStyle(
+                    color: Colors.white.withOpacity(0.9),
+                    fontSize: 12,
+                  ),
                 ),
               ],
             ),
@@ -122,7 +145,11 @@ class _CampaignCard extends StatelessWidget {
               children: [
                 Text(
                   campaign['title'] as String,
-                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Color(0xFF1E293B)),
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xFF1E293B),
+                  ),
                 ),
                 const SizedBox(height: 12),
                 // Progress bar
@@ -139,10 +166,20 @@ class _CampaignCard extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Raised: ${campaign['raised']}', style: const TextStyle(fontSize: 12, color: Color(0xFF64748B))),
+                    Text(
+                      'Raised: ${campaign['raised']}',
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Color(0xFF64748B),
+                      ),
+                    ),
                     Text(
                       '${(progress * 100).toInt()}% funded',
-                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: color),
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w700,
+                        color: color,
+                      ),
                     ),
                   ],
                 ),
@@ -156,8 +193,13 @@ class _CampaignCard extends StatelessWidget {
                       foregroundColor: Colors.white,
                       elevation: 0,
                       padding: const EdgeInsets.symmetric(vertical: 12),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                      textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      textStyle: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
+                      ),
                     ),
                     child: const Text('View Details'),
                   ),

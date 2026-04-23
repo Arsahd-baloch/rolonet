@@ -18,7 +18,11 @@ void showLoginRequiredDialog(BuildContext context) {
               color: AppTheme.primaryBlue.withOpacity(0.1),
               shape: BoxShape.circle,
             ),
-            child: const Icon(Icons.lock_outline, color: AppTheme.primaryBlue, size: 36),
+            child: const Icon(
+              Icons.lock_outline,
+              color: AppTheme.primaryBlue,
+              size: 36,
+            ),
           ),
           const SizedBox(height: 16),
           const Text(
@@ -33,7 +37,11 @@ void showLoginRequiredDialog(BuildContext context) {
           const Text(
             'You need to be logged in to continue. Please login or create an account.',
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 14, color: AppTheme.textLight, height: 1.5),
+            style: TextStyle(
+              fontSize: 14,
+              color: AppTheme.textLight,
+              height: 1.5,
+            ),
           ),
           const SizedBox(height: 24),
           Row(

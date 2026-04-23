@@ -48,10 +48,7 @@ class AppTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
-          textStyle: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
+          textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
@@ -62,16 +59,16 @@ class AppTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
-          textStyle: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
+          textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: Colors.white,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 16,
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: const BorderSide(color: borderGrey),
@@ -93,9 +90,7 @@ class AppTheme {
         color: Colors.white,
         elevation: 2,
         shadowColor: Colors.black.withOpacity(0.05),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         margin: const EdgeInsets.symmetric(vertical: 8),
       ),
       textTheme: const TextTheme(
@@ -109,18 +104,9 @@ class AppTheme {
           fontSize: 20,
           fontWeight: FontWeight.bold,
         ),
-        bodyLarge: TextStyle(
-          color: textDark,
-          fontSize: 16,
-        ),
-        bodyMedium: TextStyle(
-          color: textLight,
-          fontSize: 14,
-        ),
-        labelSmall: TextStyle(
-          color: textLight,
-          fontSize: 12,
-        ),
+        bodyLarge: TextStyle(color: textDark, fontSize: 16),
+        bodyMedium: TextStyle(color: textLight, fontSize: 14),
+        labelSmall: TextStyle(color: textLight, fontSize: 12),
       ),
     );
   }

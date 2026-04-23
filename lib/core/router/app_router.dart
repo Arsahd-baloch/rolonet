@@ -20,16 +20,16 @@ class AppRouter {
   AppRouter._();
 
   // ─── Route name constants ────────────────
-  static const String splash       = '/';
-  static const String landing      = '/landing';
-  static const String roleSelect   = '/role-selection';
-  static const String login        = '/login';
-  static const String register     = '/register';
-  static const String donorDash    = '/dashboard/donor';
-  static const String volunteerDash= '/dashboard/volunteer';
-  static const String ngoDash      = '/dashboard/ngo';
-  static const String beneficiary  = '/dashboard/beneficiary';
-  static const String adminDash    = '/dashboard/admin';
+  static const String splash = '/';
+  static const String landing = '/landing';
+  static const String roleSelect = '/role-selection';
+  static const String login = '/login';
+  static const String register = '/register';
+  static const String donorDash = '/dashboard/donor';
+  static const String volunteerDash = '/dashboard/volunteer';
+  static const String ngoDash = '/dashboard/ngo';
+  static const String beneficiary = '/dashboard/beneficiary';
+  static const String adminDash = '/dashboard/admin';
 
   // ─── Navigation methods ──────────────────
 
@@ -48,51 +48,51 @@ class AppRouter {
   }
 
   static void toRoleSelection(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => const RoleSelectionScreen()),
-    );
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (_) => const RoleSelectionScreen()));
   }
 
   static void toLogin(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => const LoginScreen()),
-    );
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (_) => const LoginScreen()));
   }
 
   static void toRegister(BuildContext context, {required String role}) {
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => RegisterScreen(role: role)),
-    );
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (_) => RegisterScreen(role: role)));
   }
 
   static void toDonorDashboard(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => const DonorDashboardScreen()),
-    );
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (_) => const DonorDashboardScreen()));
   }
 
   static void toVolunteerDashboard(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => const VolunteerDashboardScreen()),
-    );
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (_) => const VolunteerDashboardScreen()));
   }
 
   static void toNgoDashboard(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => const NgoDashboardScreen()),
-    );
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (_) => const NgoDashboardScreen()));
   }
 
   static void toBeneficiaryScreen(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => const BeneficiaryScreen()),
-    );
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (_) => const BeneficiaryScreen()));
   }
 
   static void toAdminDashboard(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => const AdminDashboardScreen()),
-    );
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (_) => const AdminDashboardScreen()));
   }
 
   /// Role-based routing after mock login.

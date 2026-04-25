@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:reliefnet/features/campaigns/presentation/create_campaign_screen.dart';
 
 // ─── Mock Data Models ────────────────────────
 enum CampaignStatus { active, draft, closed }
@@ -351,9 +352,14 @@ class _QuickActions extends StatelessWidget {
                 label: 'Create Campaign',
                 icon: Icons.add_circle_rounded,
                 color: const Color(0xFF1E40AF),
-                onTap: () {
-                  // TODO: Open create campaign UI (not implemented yet)
-                },
+onTap: () {
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (_) => CreateCampaignScreen(),
+    ),
+  );
+},
               ),
             ),
             const SizedBox(width: 10),

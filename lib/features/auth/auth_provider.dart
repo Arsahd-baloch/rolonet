@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import '../../core/api/api_constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final authProvider = NotifierProvider<AuthNotifier, AuthState>(() {
   return AuthNotifier();
@@ -55,9 +56,18 @@ class AuthNotifier extends Notifier<AuthState> {
         }),
       );
 
+      // ADD THESE 2 LINES HERE
+      print("STATUS: ${response.statusCode}");
+      print("BODY: ${response.body}");
+
       final data = jsonDecode(response.body);
 
       if (response.statusCode == 201 || response.statusCode == 200) {
+        final prefs = await SharedPreferences.getInstance();
+
+       // await prefs.setString('token', data['token']);
+        await prefs.setString('user', jsonEncode(data['user']));
+
         state = state.copyWith(isLoading: false);
         return true;
       } else {
@@ -68,6 +78,7 @@ class AuthNotifier extends Notifier<AuthState> {
         return false;
       }
     } catch (e) {
+       print("REGISTER ERROR: $e"); // ADD THIS
       state = state.copyWith(
         isLoading: false,
         error: 'Network error: ${e.toString()}',
@@ -90,6 +101,14 @@ class AuthNotifier extends Notifier<AuthState> {
       final data = jsonDecode(response.body);
 
       if (response.statusCode == 200) {
+
+       // print("LOGIN SUCCESS - SAVING USER");
+        // ✅ FIX: Save to storage (required for splash auto-login)
+        final prefs = await SharedPreferences.getInstance();
+
+        await prefs.setString('token', data['token']);
+        await prefs.setString('user', jsonEncode(data['user']));
+
         state = state.copyWith(
           isLoading: false,
           token: data['token'],
@@ -112,5 +131,28 @@ class AuthNotifier extends Notifier<AuthState> {
     }
   }
 
-  // To be implemented: logout, getMe
+  // ================= LOAD USER =================
+  Future<void> loadUserFromStorage() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    final token = prefs.getString('token');
+    final userString = prefs.getString('user');
+
+    if (token != null && userString != null) {
+      final user = jsonDecode(userString);
+
+      state = state.copyWith(
+        token: token,
+        user: user,
+      );
+    }
+  }
+
+  // ================= LOGOUT =================
+  Future<void> logout() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
+
+    state = AuthState();
+  }
 }

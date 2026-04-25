@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/router/app_router.dart';
 import '../../core/theme/app_theme.dart';
+import '../auth/auth_provider.dart';
 
-class SplashScreen extends StatefulWidget {
+class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  ConsumerState<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen>
+class _SplashScreenState extends ConsumerState<SplashScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _fadeAnim;
@@ -41,12 +43,23 @@ class _SplashScreenState extends State<SplashScreen>
 
     _controller.forward();
 
-    // Navigate to /landing after 3 seconds
-    Future.delayed(const Duration(seconds: 3), () {
-      if (mounted) {
-        AppRouter.toLanding(context);
-      }
-    });
+    // removed timer (FIX ONLY)
+    _init();
+  }
+
+  void _init() async {
+    await ref.read(authProvider.notifier).loadUserFromStorage();
+
+    final user = ref.read(authProvider).user;
+
+    print("USER FROM STORAGE: $user");
+
+    if (user != null) {
+      final role = user['role'];
+      AppRouter.toRoleDashboard(context, role);
+    } else {
+      AppRouter.toLanding(context);
+    }
   }
 
   @override
@@ -65,7 +78,7 @@ class _SplashScreenState extends State<SplashScreen>
           decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Color(0xFFDBEAFE), // light blue
+                Color(0xFFDBEAFE),
                 AppTheme.lightBlue,
                 Colors.white,
               ],
@@ -86,7 +99,6 @@ class _SplashScreenState extends State<SplashScreen>
               children: [
                 const Spacer(flex: 2),
 
-                // Logo icon placeholder
                 Container(
                   width: 100,
                   height: 100,
@@ -110,7 +122,6 @@ class _SplashScreenState extends State<SplashScreen>
 
                 const SizedBox(height: 28),
 
-                // App name
                 const Text(
                   'ReliefNet',
                   style: TextStyle(
@@ -123,7 +134,6 @@ class _SplashScreenState extends State<SplashScreen>
 
                 const SizedBox(height: 10),
 
-                // Tagline
                 const Text(
                   'Connecting Aid. Delivering Hope.',
                   style: TextStyle(
@@ -136,7 +146,6 @@ class _SplashScreenState extends State<SplashScreen>
 
                 const Spacer(flex: 2),
 
-                // Loading indicator at bottom
                 const CircularProgressIndicator(
                   strokeWidth: 2.5,
                   valueColor: AlwaysStoppedAnimation<Color>(

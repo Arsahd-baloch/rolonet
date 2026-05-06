@@ -73,7 +73,7 @@ class _CampaignListScreenState extends ConsumerState<CampaignListScreen> {
                           context,
                           MaterialPageRoute(
                             builder: (_) =>
-                                CampaignDetailScreen(campaign: campaign),
+                                CampaignDetailScreen(campaignId: campaign.id),
                           ),
                         );
                       },

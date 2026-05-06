@@ -110,4 +110,44 @@ class CampaignApi {
       throw Exception("Delete failed: ${response.body}");
     }
   }
+
+  // ================= ACTIVATE CAMPAIGN ✅ =================
+  static Future<void> activateCampaign(int id, String token) async {
+    final response = await http.patch(
+      Uri.parse("$baseUrl/campaigns/$id/activate"),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token",
+      },
+      body: jsonEncode({"status": "ACTIVE"}),
+    );
+
+    print("ACTIVATE STATUS: ${response.statusCode}");
+    print("ACTIVATE BODY: ${response.body}");
+
+    if (response.statusCode != 200) {
+      throw Exception("Activate failed: ${response.body}");
+    }
+  }
+
+  // ================= CLOSE CAMPAIGN ✅ =================
+  static Future<void> closeCampaign(int id, String token) async {
+    final response = await http.patch(
+      Uri.parse("$baseUrl/campaigns/$id/close"),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token",
+      },
+      body: jsonEncode({"status": "CLOSED"}),
+    );
+
+    print("CLOSE STATUS: ${response.statusCode}");
+    print("CLOSE BODY: ${response.body}");
+
+    if (response.statusCode != 200) {
+      throw Exception("Close failed: ${response.body}");
+    }
+  }
+
+
 }

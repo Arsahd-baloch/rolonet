@@ -294,7 +294,7 @@ class _Header extends StatelessWidget {
                 child: Switch(
                   value: isAvailable,
                   onChanged: onToggle,
-                  activeColor: const Color(0xFF10B981),
+                  activeThumbColor: const Color(0xFF10B981),
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 ),
               ),

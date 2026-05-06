@@ -79,7 +79,7 @@ class BeneficiarySection extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           // Beneficiary cards
-          ..._beneficiaries.map((b) => _BeneficiaryCard(data: b)).toList(),
+          ..._beneficiaries.map((b) => _BeneficiaryCard(data: b)),
           const SizedBox(height: 8),
           // CTA
           SizedBox(

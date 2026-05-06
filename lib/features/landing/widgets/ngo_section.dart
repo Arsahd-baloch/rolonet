@@ -79,7 +79,7 @@ class NgoSection extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           // Campaign cards
-          ..._campaigns.map((c) => _CampaignCard(campaign: c)).toList(),
+          ..._campaigns.map((c) => _CampaignCard(campaign: c)),
         ],
       ),
     );

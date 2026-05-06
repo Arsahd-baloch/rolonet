@@ -75,7 +75,7 @@ class VolunteerSection extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           // Task cards
-          ..._tasks.map((task) => _TaskCard(task: task)).toList(),
+          ..._tasks.map((task) => _TaskCard(task: task)),
           const SizedBox(height: 8),
           // CTA
           SizedBox(

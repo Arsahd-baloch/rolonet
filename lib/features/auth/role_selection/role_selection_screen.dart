@@ -39,7 +39,7 @@ class RoleSelectionScreen extends StatelessWidget {
                 description: 'For organizations managing aid',
                 icon: Icons.business_center_rounded,
                 color: AppTheme.secondaryBlue,
-                role: 'ngo',
+                role: 'ngo_admin',
               ),
               const SizedBox(height: 16),
               _RoleCard(

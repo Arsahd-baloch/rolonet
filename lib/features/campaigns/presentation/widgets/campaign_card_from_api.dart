@@ -28,6 +28,7 @@ class CampaignCard extends ConsumerWidget {
     return type;
   }
 
+  // ✅ DELETE CONFIRMATION DIALOG
   Future<void> _confirmDelete(BuildContext context, WidgetRef ref) async {
     final confirm = await showDialog<bool>(
       context: context,
@@ -86,10 +87,11 @@ class CampaignCard extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // TITLE + EDIT + DELETE
+            // TITLE + ACTIONS ROW
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                // TITLE
                 Expanded(
                   child: Text(
                     campaign.title,

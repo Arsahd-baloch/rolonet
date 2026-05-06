@@ -11,8 +11,7 @@ class CreateCampaignScreen extends ConsumerStatefulWidget {
       _CreateCampaignScreenState();
 }
 
-class _CreateCampaignScreenState
-    extends ConsumerState<CreateCampaignScreen> {
+class _CreateCampaignScreenState extends ConsumerState<CreateCampaignScreen> {
   final _formKey = GlobalKey<FormState>();
 
   final titleController = TextEditingController();
@@ -36,10 +35,7 @@ class _CreateCampaignScreenState
               children: [
                 const Text(
                   "Create Campaign",
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                 ),
 
                 const SizedBox(height: 20),
@@ -47,8 +43,7 @@ class _CreateCampaignScreenState
                 TextFormField(
                   controller: titleController,
                   decoration: const InputDecoration(labelText: "Title"),
-                  validator: (v) =>
-                      v!.isEmpty ? "Title required" : null,
+                  validator: (v) => v!.isEmpty ? "Title required" : null,
                 ),
 
                 const SizedBox(height: 12),
@@ -57,8 +52,7 @@ class _CreateCampaignScreenState
                   controller: descController,
                   decoration: const InputDecoration(labelText: "Description"),
                   maxLines: 3,
-                  validator: (v) =>
-                      v!.isEmpty ? "Description required" : null,
+                  validator: (v) => v!.isEmpty ? "Description required" : null,
                 ),
 
                 const SizedBox(height: 12),
@@ -66,8 +60,7 @@ class _CreateCampaignScreenState
                 TextFormField(
                   controller: amountController,
                   keyboardType: TextInputType.number,
-                  decoration:
-                      const InputDecoration(labelText: "Goal Amount"),
+                  decoration: const InputDecoration(labelText: "Goal Amount"),
                 ),
 
                 const SizedBox(height: 12),
@@ -75,18 +68,14 @@ class _CreateCampaignScreenState
                 DropdownButtonFormField(
                   initialValue: donationType,
                   items: const [
-                    DropdownMenuItem(
-                        value: "MONEY", child: Text("Money")),
-                    DropdownMenuItem(
-                        value: "ITEMS", child: Text("Items")),
-                    DropdownMenuItem(
-                        value: "BOTH", child: Text("Both")),
+                    DropdownMenuItem(value: "MONEY", child: Text("Money")),
+                    DropdownMenuItem(value: "ITEMS", child: Text("Items")),
+                    DropdownMenuItem(value: "BOTH", child: Text("Both")),
                   ],
                   onChanged: (val) {
                     donationType = val!;
                   },
-                  decoration:
-                      const InputDecoration(labelText: "Donation Type"),
+                  decoration: const InputDecoration(labelText: "Donation Type"),
                 ),
 
                 const SizedBox(height: 20),
@@ -101,13 +90,24 @@ class _CreateCampaignScreenState
 
                             final success = await ref
                                 .read(campaignProvider.notifier)
-                                .createCampaign(CampaignModel(
-                              title: titleController.text,
-                              description: descController.text,
-                              donationType: donationType,
-                              goalAmount:
-                                  double.tryParse(amountController.text) ?? 0,
-                            ));
+                                .createCampaign(
+                                  CampaignModel(
+                                    id: 0,
+                                    title: titleController.text,
+                                    description: descController.text,
+                                    status: 'DRAFT',
+                                    goalAmount:
+                                        double.tryParse(
+                                          amountController.text,
+                                        ) ??
+                                        0,
+                                    totalAmount: 0.0,
+                                    donationType: donationType,
+                                    donorCount: 0,
+                                    goalQuantity: 0,
+                                    totalQuantity: 0,
+                                  ),
+                                );
 
                             if (!context.mounted) return;
 
@@ -118,6 +118,12 @@ class _CreateCampaignScreenState
                                 ),
                               );
                               Navigator.pop(context);
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text("Failed to create campaign"),
+                                ),
+                              );
                             }
                           },
                     child: state.isLoading

@@ -1,30 +1,32 @@
-import 'package:reliefnet/features/donor/presentation/donate_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../domain/campaign_model.dart';
-import '../state/campaign_provider.dart';
-import 'edit_campaign_screen.dart';
+import 'package:reliefnet/features/campaigns/state/campaign_provider.dart';
+import 'donate_screen.dart';
 
-class CampaignDetailScreen extends ConsumerWidget {
-  final int campaignId; // ✅ only pass ID, not the whole object
+class DonorCampaignDetailScreen extends ConsumerWidget {
+  final int campaignId;
 
-  const CampaignDetailScreen({super.key, required this.campaignId});
+  const DonorCampaignDetailScreen({super.key, required this.campaignId});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final campaignState = ref.watch(campaignProvider);
+    final state = ref.watch(campaignProvider);
 
-    return campaignState.when(
+    return state.when(
       loading: () =>
           const Scaffold(body: Center(child: CircularProgressIndicator())),
-      error: (e, _) => Scaffold(body: Center(child: Text("Error: $e"))),
+      error: (e, _) => Scaffold(body: Center(child: Text('Error: $e'))),
       data: (campaigns) {
-        final campaign = campaigns.firstWhere(
-          (c) => c.id == campaignId,
-          orElse: () => throw Exception("Campaign not found"),
-        );
+        final matches = campaigns.where((c) => c.id == campaignId).toList();
 
+        if (matches.isEmpty) {
+          return const Scaffold(
+            body: Center(child: Text('Campaign not found')),
+          );
+        }
+
+        final campaign = matches.first;
         final hasImage =
             campaign.imageUrl != null && campaign.imageUrl!.isNotEmpty;
         final progress = campaign.progress.clamp(0.0, 1.0);
@@ -32,6 +34,7 @@ class CampaignDetailScreen extends ConsumerWidget {
         return Scaffold(
           body: CustomScrollView(
             slivers: [
+              // ── HERO IMAGE ──
               SliverAppBar(
                 expandedHeight: hasImage ? 260 : 120,
                 pinned: true,
@@ -48,13 +51,13 @@ class CampaignDetailScreen extends ConsumerWidget {
                       ? CachedNetworkImage(
                           imageUrl: campaign.imageUrl!,
                           fit: BoxFit.cover,
-                          placeholder: (context, url) => Container(
+                          placeholder: (_, __) => Container(
                             color: Colors.grey[300],
                             child: const Center(
                               child: CircularProgressIndicator(),
                             ),
                           ),
-                          errorWidget: (context, url, error) => Container(
+                          errorWidget: (_, __, ___) => Container(
                             color: Colors.grey[300],
                             child: const Icon(Icons.broken_image, size: 48),
                           ),
@@ -70,70 +73,49 @@ class CampaignDetailScreen extends ConsumerWidget {
                           ),
                         ),
                 ),
-                actions: [
-                  IconButton(
-                    icon: const Icon(Icons.edit),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) =>
-                              EditCampaignScreen(campaign: campaign),
-                        ),
-                      );
-                    },
-                  ),
-                ],
               ),
+
+              // ── CONTENT ──
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.all(16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          _badge(campaign.status, Colors.blue),
-                        ],
-                      ),
-
-                      const SizedBox(height: 16),
-
-                      // ── DONATE BUTTON ──
-                      if (campaign.status.toUpperCase() == 'ACTIVE')
-                        SizedBox(
-                          width: double.infinity,
-                          height: 50,
-                          child: ElevatedButton.icon(
-                            icon:
-                                const Icon(Icons.favorite, color: Colors.white),
-                            label: const Text(
-                              'Donate Now',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.blue,
-                              foregroundColor: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) =>
-                                      DonateScreen(campaign: campaign),
-                                ),
-                              );
-                            },
+                      // ── TYPE BADGE ──
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 4,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.green.withValues(alpha: 0.1),
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(
+                            color: Colors.green.withValues(alpha: 0.4),
                           ),
                         ),
+                        child: Text(
+                          campaign.safeDonationType,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: Colors.green,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
 
-                      const SizedBox(height: 32),
+                      const SizedBox(height: 20),
 
+                      // ── PROGRESS ──
+                      const Text(
+                        'Fundraising Progress',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
                       ClipRRect(
                         borderRadius: BorderRadius.circular(6),
                         child: LinearProgressIndicator(
@@ -150,14 +132,14 @@ class CampaignDetailScreen extends ConsumerWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "PKR ${campaign.totalAmount.toStringAsFixed(0)} raised",
+                            'PKR ${campaign.totalAmount.toStringAsFixed(0)} raised',
                             style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
                           Text(
-                            "Goal: PKR ${campaign.goalAmount.toStringAsFixed(0)}",
+                            'Goal: PKR ${campaign.goalAmount.toStringAsFixed(0)}',
                             style: TextStyle(
                               fontSize: 13,
                               color: Colors.grey[600],
@@ -167,13 +149,15 @@ class CampaignDetailScreen extends ConsumerWidget {
                       ),
                       const SizedBox(height: 6),
                       Text(
-                        "${(progress * 100).toStringAsFixed(1)}% complete  •  ${campaign.donorCount} donors",
-                        style: TextStyle(
-                            fontSize: 12, color: Colors.grey[500]),
+                        '${(progress * 100).toStringAsFixed(1)}% complete  •  ${campaign.donorCount} donors',
+                        style: TextStyle(fontSize: 12, color: Colors.grey[500]),
                       ),
+
                       const Divider(height: 32),
+
+                      // ── DESCRIPTION ──
                       const Text(
-                        "About this Campaign",
+                        'About this Campaign',
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
@@ -182,12 +166,14 @@ class CampaignDetailScreen extends ConsumerWidget {
                       const SizedBox(height: 8),
                       Text(
                         campaign.description,
-                        style:
-                            const TextStyle(fontSize: 14, height: 1.6),
+                        style: const TextStyle(fontSize: 14, height: 1.6),
                       ),
+
                       const Divider(height: 32),
+
+                      // ── DATES ──
                       const Text(
-                        "Campaign Duration",
+                        'Campaign Duration',
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
@@ -199,7 +185,7 @@ class CampaignDetailScreen extends ConsumerWidget {
                           Expanded(
                             child: _dateCard(
                               icon: Icons.calendar_today,
-                              label: "Start Date",
+                              label: 'Start Date',
                               date: campaign.startDate,
                               color: Colors.blue,
                             ),
@@ -208,13 +194,48 @@ class CampaignDetailScreen extends ConsumerWidget {
                           Expanded(
                             child: _dateCard(
                               icon: Icons.event,
-                              label: "End Date",
+                              label: 'End Date',
                               date: campaign.endDate,
                               color: Colors.red,
                             ),
                           ),
                         ],
                       ),
+
+                      const SizedBox(height: 32),
+
+                      // ── DONATE BUTTON ──
+                      SizedBox(
+                        width: double.infinity,
+                        height: 52,
+                        child: ElevatedButton.icon(
+                          icon: const Icon(Icons.favorite, color: Colors.white),
+                          label: const Text(
+                            'Donate Now',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue,
+                            foregroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) =>
+                                    DonateScreen(campaign: campaign),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+
                       const SizedBox(height: 32),
                     ],
                   ),
@@ -227,26 +248,6 @@ class CampaignDetailScreen extends ConsumerWidget {
     );
   }
 
-  Widget _badge(String label, Color color) {
-    return Container(
-      padding:
-          const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-      decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: color.withOpacity(0.4)),
-      ),
-      child: Text(
-        label,
-        style: TextStyle(
-          fontSize: 12,
-          color: color,
-          fontWeight: FontWeight.w600,
-        ),
-      ),
-    );
-  }
-
   Widget _dateCard({
     required IconData icon,
     required String label,
@@ -254,15 +255,15 @@ class CampaignDetailScreen extends ConsumerWidget {
     required Color color,
   }) {
     final formatted = date != null
-        ? "${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}"
-        : "Not set";
+        ? '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}'
+        : 'Not set';
 
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.05),
+        color: color.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: color.withOpacity(0.2)),
+        border: Border.all(color: color.withValues(alpha: 0.2)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -282,8 +283,7 @@ class CampaignDetailScreen extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: 6),
-          Text(formatted,
-              style: const TextStyle(fontSize: 13)),
+          Text(formatted, style: const TextStyle(fontSize: 13)),
         ],
       ),
     );

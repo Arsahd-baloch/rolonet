@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:reliefnet/features/campaigns/state/campaign_provider.dart';
 import 'package:reliefnet/features/campaigns/presentation/campaign_list_screen.dart';
 import 'package:reliefnet/features/campaigns/presentation/create_campaign_screen.dart';
+import 'package:reliefnet/features/auth/auth_provider.dart';
+import 'package:reliefnet/core/router/app_router.dart';
 
 class NgoDashboardScreen extends ConsumerWidget {
   const NgoDashboardScreen({super.key});
@@ -35,6 +37,20 @@ class NgoDashboardScreen extends ConsumerWidget {
               SliverAppBar(
                 expandedHeight: 180,
                 pinned: true,
+
+                actions: [
+                  IconButton(
+                    icon: const Icon(Icons.logout),
+                    onPressed: () async {
+                      await ref.read(authProvider.notifier).logout();
+
+                      if (context.mounted) {
+                        AppRouter.logout(context);
+                      }
+                    },
+                  ),
+                ],
+
                 flexibleSpace: FlexibleSpaceBar(
                   title: const Text(
                     "NGO Dashboard",

@@ -1,111 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:reliefnet/features/admin/state/admin_provider.dart';
+import 'package:reliefnet/features/admin/domain/admin_stats_model.dart';
+import 'package:reliefnet/features/admin/presentation/admin_donations_screen.dart';
+import 'package:reliefnet/features/admin/presentation/verify/admin_campaigns_screen.dart';
+import 'package:reliefnet/features/admin/presentation/verify/admin_ngos_screen.dart';
+import 'package:reliefnet/features/admin/presentation/verify/admin_users_screen.dart';
 
-// ─── Mock Data ───────────────────────────────
-enum UserStatus { active, suspended }
-
-enum NgoVerification { verified, pending, rejected }
-
-class _User {
-  final String name;
-  final String role;
-  final UserStatus status;
-  const _User({required this.name, required this.role, required this.status});
-}
-
-class _Ngo {
-  final String name;
-  final NgoVerification verification;
-  const _Ngo({required this.name, required this.verification});
-}
-
-class _LogEntry {
-  final String event;
-  final String time;
-  final IconData icon;
-  final Color color;
-  const _LogEntry({
-    required this.event,
-    required this.time,
-    required this.icon,
-    required this.color,
-  });
-}
-
-// ─────────────────────────────────────────────
-// ADMIN DASHBOARD SCREEN
-// ─────────────────────────────────────────────
-class AdminDashboardScreen extends StatefulWidget {
+class AdminDashboardScreen extends ConsumerStatefulWidget {
   const AdminDashboardScreen({super.key});
 
   @override
-  State<AdminDashboardScreen> createState() => _AdminDashboardScreenState();
+  ConsumerState<AdminDashboardScreen> createState() =>
+      _AdminDashboardScreenState();
 }
 
-class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
+class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
   bool isDisasterMode = false;
   int _selectedMenu = 0;
 
-  static const _menuItems = [
-    {'label': 'Dashboard', 'icon': Icons.dashboard_rounded},
-    {'label': 'Users', 'icon': Icons.people_rounded},
-    {'label': 'NGOs', 'icon': Icons.business_center_rounded},
-    {'label': 'Campaigns', 'icon': Icons.campaign_rounded},
-    {'label': 'Donations', 'icon': Icons.volunteer_activism_rounded},
-    {'label': 'Disaster Mode', 'icon': Icons.emergency_rounded},
-    {'label': 'Reports', 'icon': Icons.bar_chart_rounded},
-    {'label': 'System Logs', 'icon': Icons.receipt_long_rounded},
-  ];
-
-  static const List<_User> _users = [
-    _User(name: 'Ahmed Khan', role: 'NGO', status: UserStatus.active),
-    _User(name: 'Sara Ali', role: 'Donor', status: UserStatus.active),
-    _User(name: 'Bilal Raza', role: 'Volunteer', status: UserStatus.suspended),
-    _User(name: 'Fatima Malik', role: 'Beneficiary', status: UserStatus.active),
-    _User(name: 'Omar Sheikh', role: 'Donor', status: UserStatus.active),
-  ];
-
-  static const List<_Ngo> _ngos = [
-    _Ngo(name: 'Al-Khidmat Foundation', verification: NgoVerification.verified),
-    _Ngo(name: 'Edhi Foundation', verification: NgoVerification.verified),
-    _Ngo(name: 'Green Aid Network', verification: NgoVerification.pending),
-    _Ngo(name: 'Hope Relief Org', verification: NgoVerification.rejected),
-  ];
-
-  static const List<_LogEntry> _logs = [
-    _LogEntry(
-      event: 'User "Sara Ali" logged in',
-      time: '2 min ago',
-      icon: Icons.login_rounded,
-      color: Color(0xFF3B82F6),
-    ),
-    _LogEntry(
-      event: 'Campaign "Winter Relief" created',
-      time: '15 min ago',
-      icon: Icons.add_circle_rounded,
-      color: Color(0xFF10B981),
-    ),
-    _LogEntry(
-      event: 'Donation of PKR 5,000 received',
-      time: '32 min ago',
-      icon: Icons.attach_money_rounded,
-      color: Color(0xFFF59E0B),
-    ),
-    _LogEntry(
-      event: 'NGO "Green Aid" submitted for review',
-      time: '1 hr ago',
-      icon: Icons.business_center_rounded,
-      color: Color(0xFF8B5CF6),
-    ),
-    _LogEntry(
-      event: 'Volunteer task accepted by Bilal',
-      time: '2 hr ago',
-      icon: Icons.assignment_turned_in_rounded,
-      color: Color(0xFF10B981),
-    ),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(adminProvider.notifier).loadAll();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    final adminState = ref.watch(adminProvider);
+
     return Scaffold(
       backgroundColor: const Color(0xFFF1F5F9),
       drawer: _Drawer(
@@ -113,7 +38,28 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
         onSelect: (i) {
           setState(() => _selectedMenu = i);
           Navigator.of(context).pop();
-          // TODO: Navigate to section
+
+          if (i == 1) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const AdminUsersScreen()),
+            );
+          } else if (i == 2) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const AdminNgosScreen()),
+            );
+          } else if (i == 3) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const AdminCampaignsScreen()),
+            );
+          } else if (i == 4) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const AdminDonationsScreen()),
+            );
+          }
         },
       ),
       body: SafeArea(
@@ -122,44 +68,127 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
             _TopBar(isDisasterMode: isDisasterMode),
             if (isDisasterMode) const _DisasterActiveBanner(),
             Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // KPI Stats
-                    const _SectionLabel(text: 'System Overview'),
-                    const SizedBox(height: 10),
-                    const _KpiRow(),
-                    const SizedBox(height: 24),
-                    // Disaster Control
-                    _DisasterControlPanel(
-                      isActive: isDisasterMode,
-                      onToggle: () =>
+              child: adminState.isLoading
+                  ? const Center(
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2.5,
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          Color(0xFF1E40AF),
+                        ),
+                      ),
+                    )
+                  : adminState.error != null
+                  ? _ErrorView(
+                      error: adminState.error!,
+                      onRetry: () => ref.read(adminProvider.notifier).loadAll(),
+                    )
+                  : _DashboardBody(
+                      adminState: adminState,
+                      isDisasterMode: isDisasterMode,
+                      onDisasterToggle: () =>
                           setState(() => isDisasterMode = !isDisasterMode),
                     ),
-                    const SizedBox(height: 24),
-                    // Users
-                    const _SectionLabel(text: 'Users Overview'),
-                    const SizedBox(height: 10),
-                    _UsersTable(users: _users),
-                    const SizedBox(height: 24),
-                    // NGOs
-                    const _SectionLabel(text: 'NGO Overview'),
-                    const SizedBox(height: 10),
-                    _NgoList(ngos: _ngos),
-                    const SizedBox(height: 24),
-                    // Donations
-                    const _SectionLabel(text: 'Donation Overview'),
-                    const SizedBox(height: 10),
-                    const _DonationOverview(),
-                    const SizedBox(height: 24),
-                    // Logs
-                    const _SectionLabel(text: 'Recent System Activity'),
-                    const SizedBox(height: 10),
-                    _LogsList(logs: _logs),
-                    const SizedBox(height: 16),
-                  ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _DashboardBody extends StatelessWidget {
+  final AdminState adminState;
+  final bool isDisasterMode;
+  final VoidCallback onDisasterToggle;
+  const _DashboardBody({
+    required this.adminState,
+    required this.isDisasterMode,
+    required this.onDisasterToggle,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const _SectionLabel(text: 'System Overview'),
+          const SizedBox(height: 10),
+          _KpiRow(stats: adminState.stats),
+          const SizedBox(height: 24),
+          _DisasterControlPanel(
+            isActive: isDisasterMode,
+            onToggle: onDisasterToggle,
+          ),
+          const SizedBox(height: 24),
+          const _SectionLabel(text: 'Pending NGO Verifications'),
+          const SizedBox(height: 10),
+          adminState.pendingNgos.isEmpty
+              ? const _EmptyCard(message: 'No pending NGO verifications')
+              : _PendingNgoList(ngos: adminState.pendingNgos),
+          const SizedBox(height: 24),
+          const _SectionLabel(text: 'Pending Donations'),
+          const SizedBox(height: 10),
+          adminState.pendingDonations.isEmpty
+              ? const _EmptyCard(message: 'No pending donations')
+              : _PendingDonationsList(donations: adminState.pendingDonations),
+          const SizedBox(height: 24),
+          const _SectionLabel(text: 'Recent System Activity'),
+          const SizedBox(height: 10),
+          adminState.recentActions.isEmpty
+              ? const _EmptyCard(message: 'No recent activity')
+              : _RecentActionsList(actions: adminState.recentActions),
+          const SizedBox(height: 16),
+        ],
+      ),
+    );
+  }
+}
+
+class _ErrorView extends StatelessWidget {
+  final String error;
+  final VoidCallback onRetry;
+  const _ErrorView({required this.error, required this.onRetry});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(
+              Icons.error_outline_rounded,
+              color: Color(0xFFEF4444),
+              size: 48,
+            ),
+            const SizedBox(height: 16),
+            Text(
+              error,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 13,
+                color: Color(0xFF64748B),
+                height: 1.5,
+              ),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton.icon(
+              onPressed: onRetry,
+              icon: const Icon(Icons.refresh_rounded, size: 16),
+              label: const Text('Retry'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF1E40AF),
+                foregroundColor: Colors.white,
+                elevation: 0,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 12,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
                 ),
               ),
             ),
@@ -170,13 +199,559 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
   }
 }
 
-// ─────────────────────────────────────────────
-// DRAWER / SIDEBAR
-// ─────────────────────────────────────────────
+class _EmptyCard extends StatelessWidget {
+  final String message;
+  const _EmptyCard({required this.message});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: const Color(0xFFE2E8F0)),
+      ),
+      child: Text(
+        message,
+        textAlign: TextAlign.center,
+        style: const TextStyle(fontSize: 13, color: Color(0xFF94A3B8)),
+      ),
+    );
+  }
+}
+
+class _KpiRow extends StatelessWidget {
+  final AdminStatsModel? stats;
+  const _KpiRow({required this.stats});
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.count(
+      crossAxisCount: 2,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      crossAxisSpacing: 10,
+      mainAxisSpacing: 10,
+      childAspectRatio: 1.6,
+      children: [
+        _KpiCard(
+          label: 'Total Users',
+          value: stats != null ? '${stats!.totalUsers}' : '—',
+          icon: Icons.people_rounded,
+          color: const Color(0xFF3B82F6),
+        ),
+        _KpiCard(
+          label: 'Total NGOs',
+          value: stats != null ? '${stats!.totalNgos}' : '—',
+          icon: Icons.domain_rounded,
+          color: const Color(0xFF8B5CF6),
+        ),
+        _KpiCard(
+          label: 'Total Donations',
+          value: stats != null ? '${stats!.totalDonations}' : '—',
+          icon: Icons.attach_money_rounded,
+          color: const Color(0xFF10B981),
+        ),
+        _KpiCard(
+          label: 'Active Campaigns',
+          value: stats != null ? '${stats!.activeCampaigns}' : '—',
+          icon: Icons.campaign_rounded,
+          color: const Color(0xFFF59E0B),
+        ),
+      ],
+    );
+  }
+}
+
+class _KpiCard extends StatelessWidget {
+  final String label, value;
+  final IconData icon;
+  final Color color;
+  const _KpiCard({
+    required this.label,
+    required this.value,
+    required this.icon,
+    required this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: const Color(0xFFE2E8F0)),
+      ),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Icon(icon, color: color, size: 20),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  value,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w800,
+                    color: Color(0xFF1E293B),
+                  ),
+                ),
+                Text(
+                  label,
+                  style: const TextStyle(
+                    fontSize: 10,
+                    color: Color(0xFF64748B),
+                  ),
+                  maxLines: 2,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _PendingNgoList extends StatelessWidget {
+  final List<PendingNgoModel> ngos;
+  const _PendingNgoList({required this.ngos});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: const Color(0xFFE2E8F0)),
+      ),
+      child: Column(
+        children: ngos.asMap().entries.map((e) {
+          final ngo = e.value;
+          final bool last = e.key == ngos.length - 1;
+          return Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 13,
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF8B5CF6).withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: const Icon(
+                        Icons.domain_rounded,
+                        color: Color(0xFF8B5CF6),
+                        size: 18,
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            ngo.name,
+                            style: const TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xFF1E293B),
+                            ),
+                          ),
+                          Text(
+                            ngo.registrationNumber ?? 'No registration number',
+                            style: const TextStyle(
+                              fontSize: 11,
+                              color: Color(0xFF94A3B8),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF59E0B).withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: const Color(0xFFF59E0B).withValues(alpha: 0.3),
+                        ),
+                      ),
+                      child: const Text(
+                        'PENDING',
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w700,
+                          color: Color(0xFFF59E0B),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              if (!last)
+                const Divider(
+                  color: Color(0xFFF1F5F9),
+                  height: 1,
+                  indent: 16,
+                  endIndent: 16,
+                ),
+            ],
+          );
+        }).toList(),
+      ),
+    );
+  }
+}
+
+class _PendingDonationsList extends ConsumerWidget {
+  final List<PendingDonationModel> donations;
+  const _PendingDonationsList({required this.donations});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: const Color(0xFFE2E8F0)),
+      ),
+      child: Column(
+        children: donations.asMap().entries.map((e) {
+          final donation = e.value;
+          final bool last = e.key == donations.length - 1;
+          return Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF10B981).withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: const Icon(
+                        Icons.attach_money_rounded,
+                        color: Color(0xFF10B981),
+                        size: 18,
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'PKR ${donation.amount ?? '—'}',
+                            style: const TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w700,
+                              color: Color(0xFF1E293B),
+                            ),
+                          ),
+                          Text(
+                            'Campaign #${donation.campaignId}',
+                            style: const TextStyle(
+                              fontSize: 11,
+                              color: Color(0xFF94A3B8),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () async {
+                            final ok = await ref
+                                .read(adminProvider.notifier)
+                                .verifyDonation(donation.id);
+                            if (!ok && context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Failed to verify'),
+                                  backgroundColor: Colors.red,
+                                ),
+                              );
+                            }
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 5,
+                            ),
+                            decoration: BoxDecoration(
+                              color: const Color(
+                                0xFF10B981,
+                              ).withValues(alpha: 0.1),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: const Text(
+                              'Verify',
+                              style: TextStyle(
+                                fontSize: 11,
+                                fontWeight: FontWeight.w700,
+                                color: Color(0xFF10B981),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 6),
+                        GestureDetector(
+                          onTap: () async {
+                            final ok = await ref
+                                .read(adminProvider.notifier)
+                                .cancelDonation(donation.id);
+                            if (!ok && context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Failed to cancel'),
+                                  backgroundColor: Colors.red,
+                                ),
+                              );
+                            }
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 5,
+                            ),
+                            decoration: BoxDecoration(
+                              color: const Color(
+                                0xFFEF4444,
+                              ).withValues(alpha: 0.1),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: const Text(
+                              'Cancel',
+                              style: TextStyle(
+                                fontSize: 11,
+                                fontWeight: FontWeight.w700,
+                                color: Color(0xFFEF4444),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              if (!last)
+                const Divider(
+                  color: Color(0xFFF1F5F9),
+                  height: 1,
+                  indent: 16,
+                  endIndent: 16,
+                ),
+            ],
+          );
+        }).toList(),
+      ),
+    );
+  }
+}
+
+class _RecentActionsList extends StatelessWidget {
+  final List<RecentActionModel> actions;
+  const _RecentActionsList({required this.actions});
+
+  String _formatTime(DateTime dt) {
+    final diff = DateTime.now().difference(dt);
+    if (diff.inMinutes < 1) return 'just now';
+    if (diff.inMinutes < 60) return '${diff.inMinutes}m ago';
+    if (diff.inHours < 24) return '${diff.inHours}h ago';
+    return '${diff.inDays}d ago';
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: const Color(0xFFE2E8F0)),
+      ),
+      child: Column(
+        children: actions.asMap().entries.map((e) {
+          final action = e.value;
+          final bool last = e.key == actions.length - 1;
+          final displayText =
+              '${action.action} · ${action.entityType}'
+              '${action.userName != null ? ' by ${action.userName}' : ''}';
+          return Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF3B82F6).withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: const Icon(
+                        Icons.history_rounded,
+                        color: Color(0xFF3B82F6),
+                        size: 16,
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        displayText,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Color(0xFF374151),
+                          height: 1.4,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      _formatTime(action.createdAt),
+                      style: const TextStyle(
+                        fontSize: 10,
+                        color: Color(0xFF94A3B8),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              if (!last)
+                const Divider(
+                  color: Color(0xFFF1F5F9),
+                  height: 1,
+                  indent: 16,
+                  endIndent: 16,
+                ),
+            ],
+          );
+        }).toList(),
+      ),
+    );
+  }
+}
+
+class _DisasterControlPanel extends StatelessWidget {
+  final bool isActive;
+  final VoidCallback onToggle;
+  const _DisasterControlPanel({required this.isActive, required this.onToggle});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: isActive
+              ? [const Color(0xFFB91C1C), const Color(0xFFEF4444)]
+              : [const Color(0xFF1E3A8A), const Color(0xFF1E40AF)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Row(
+            children: [
+              Icon(Icons.emergency_rounded, color: Colors.white, size: 22),
+              SizedBox(width: 10),
+              Text(
+                'Disaster Control Panel',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Text(
+            isActive
+                ? '🚨 Disaster Mode is currently ACTIVE.'
+                : 'System is in normal operation.',
+            style: TextStyle(
+              color: Colors.white.withValues(alpha: 0.85),
+              fontSize: 13,
+              height: 1.5,
+            ),
+          ),
+          const SizedBox(height: 16),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton.icon(
+              onPressed: onToggle,
+              icon: Icon(
+                isActive
+                    ? Icons.power_settings_new_rounded
+                    : Icons.warning_amber_rounded,
+                size: 18,
+              ),
+              label: Text(
+                isActive
+                    ? 'Deactivate Disaster Mode'
+                    : 'Activate Disaster Mode',
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.white,
+                foregroundColor: isActive
+                    ? const Color(0xFFEF4444)
+                    : const Color(0xFF1E40AF),
+                elevation: 0,
+                padding: const EdgeInsets.symmetric(vertical: 13),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                textStyle: const TextStyle(
+                  fontWeight: FontWeight.w800,
+                  fontSize: 14,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _Drawer extends StatelessWidget {
   final int selectedIndex;
   final ValueChanged<int> onSelect;
-
   const _Drawer({required this.selectedIndex, required this.onSelect});
 
   static const _items = [
@@ -198,7 +773,6 @@ class _Drawer extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 20, 20, 24),
               child: Row(
@@ -241,7 +815,6 @@ class _Drawer extends StatelessWidget {
             ),
             const Divider(color: Color(0xFF334155), height: 1),
             const SizedBox(height: 8),
-            // Menu items
             ...(_items as List<Map<String, dynamic>>).asMap().entries.map((e) {
               final i = e.key;
               final item = e.value;
@@ -259,7 +832,7 @@ class _Drawer extends StatelessWidget {
                   ),
                   decoration: BoxDecoration(
                     color: selected
-                        ? const Color(0xFF1E40AF).withOpacity(0.3)
+                        ? const Color(0xFF1E40AF).withValues(alpha: 0.3)
                         : Colors.transparent,
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -297,9 +870,6 @@ class _Drawer extends StatelessWidget {
   }
 }
 
-// ─────────────────────────────────────────────
-// TOP BAR
-// ─────────────────────────────────────────────
 class _TopBar extends StatelessWidget {
   final bool isDisasterMode;
   const _TopBar({required this.isDisasterMode});
@@ -342,7 +912,7 @@ class _TopBar extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: const Color(0xFF1E40AF).withOpacity(0.1),
+              color: const Color(0xFF1E40AF).withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
             child: const Icon(
@@ -357,9 +927,6 @@ class _TopBar extends StatelessWidget {
   }
 }
 
-// ─────────────────────────────────────────────
-// DISASTER ACTIVE BANNER
-// ─────────────────────────────────────────────
 class _DisasterActiveBanner extends StatelessWidget {
   const _DisasterActiveBanner();
 
@@ -387,592 +954,6 @@ class _DisasterActiveBanner extends StatelessWidget {
   }
 }
 
-// ─────────────────────────────────────────────
-// KPI STATS ROW
-// ─────────────────────────────────────────────
-class _KpiRow extends StatelessWidget {
-  const _KpiRow();
-
-  @override
-  Widget build(BuildContext context) {
-    return GridView.count(
-      crossAxisCount: 2,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      crossAxisSpacing: 10,
-      mainAxisSpacing: 10,
-      childAspectRatio: 1.6,
-      children: const [
-        _KpiCard(
-          label: 'Total Users',
-          value: '2,840',
-          icon: Icons.people_rounded,
-          color: Color(0xFF3B82F6),
-        ),
-        _KpiCard(
-          label: 'Total NGOs',
-          value: '85',
-          icon: Icons.domain_rounded,
-          color: Color(0xFF8B5CF6),
-        ),
-        _KpiCard(
-          label: 'Total Donations',
-          value: 'PKR 8.2M',
-          icon: Icons.attach_money_rounded,
-          color: Color(0xFF10B981),
-        ),
-        _KpiCard(
-          label: 'Active Campaigns',
-          value: '34',
-          icon: Icons.campaign_rounded,
-          color: Color(0xFFF59E0B),
-        ),
-      ],
-    );
-  }
-}
-
-class _KpiCard extends StatelessWidget {
-  final String label;
-  final String value;
-  final IconData icon;
-  final Color color;
-  const _KpiCard({
-    required this.label,
-    required this.value,
-    required this.icon,
-    required this.color,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
-      ),
-      child: Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Icon(icon, color: color, size: 20),
-          ),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  value,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w800,
-                    color: Color(0xFF1E293B),
-                  ),
-                ),
-                Text(
-                  label,
-                  style: const TextStyle(
-                    fontSize: 10,
-                    color: Color(0xFF64748B),
-                  ),
-                  maxLines: 2,
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// ─────────────────────────────────────────────
-// DISASTER CONTROL PANEL
-// ─────────────────────────────────────────────
-class _DisasterControlPanel extends StatelessWidget {
-  final bool isActive;
-  final VoidCallback onToggle;
-  const _DisasterControlPanel({required this.isActive, required this.onToggle});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: isActive
-              ? [const Color(0xFFB91C1C), const Color(0xFFEF4444)]
-              : [const Color(0xFF1E3A8A), const Color(0xFF1E40AF)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              const Icon(
-                Icons.emergency_rounded,
-                color: Colors.white,
-                size: 22,
-              ),
-              const SizedBox(width: 10),
-              const Text(
-                'Disaster Control Panel',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w800,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Text(
-            isActive
-                ? '🚨 Disaster Mode is currently ACTIVE. All volunteers and NGOs are on alert.'
-                : 'System is in normal operation. Activate only during emergency events.',
-            style: TextStyle(
-              color: Colors.white.withOpacity(0.85),
-              fontSize: 13,
-              height: 1.5,
-            ),
-          ),
-          const SizedBox(height: 16),
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton.icon(
-              onPressed: () {
-                onToggle();
-                // TODO: Toggle disaster mode state (UI only)
-              },
-              icon: Icon(
-                isActive
-                    ? Icons.power_settings_new_rounded
-                    : Icons.warning_amber_rounded,
-                size: 18,
-              ),
-              label: Text(
-                isActive
-                    ? 'Deactivate Disaster Mode'
-                    : 'Activate Disaster Mode',
-              ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white,
-                foregroundColor: isActive
-                    ? const Color(0xFFEF4444)
-                    : const Color(0xFF1E40AF),
-                elevation: 0,
-                padding: const EdgeInsets.symmetric(vertical: 13),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                textStyle: const TextStyle(
-                  fontWeight: FontWeight.w800,
-                  fontSize: 14,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// ─────────────────────────────────────────────
-// USERS TABLE
-// ─────────────────────────────────────────────
-class _UsersTable extends StatelessWidget {
-  final List<_User> users;
-  const _UsersTable({required this.users});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
-      ),
-      child: Column(
-        children: users.asMap().entries.map((e) {
-          final user = e.value;
-          final bool last = e.key == users.length - 1;
-          return Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 12,
-                ),
-                child: Row(
-                  children: [
-                    CircleAvatar(
-                      radius: 18,
-                      backgroundColor: const Color(0xFF1E40AF).withOpacity(0.1),
-                      child: Text(
-                        user.name[0],
-                        style: const TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w700,
-                          color: Color(0xFF1E40AF),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            user.name,
-                            style: const TextStyle(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w700,
-                              color: Color(0xFF1E293B),
-                            ),
-                          ),
-                          Text(
-                            user.role,
-                            style: const TextStyle(
-                              fontSize: 11,
-                              color: Color(0xFF94A3B8),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: user.status == UserStatus.active
-                            ? const Color(0xFF10B981).withOpacity(0.1)
-                            : const Color(0xFFEF4444).withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Text(
-                        user.status == UserStatus.active
-                            ? 'Active'
-                            : 'Suspended',
-                        style: TextStyle(
-                          fontSize: 10,
-                          fontWeight: FontWeight.w700,
-                          color: user.status == UserStatus.active
-                              ? const Color(0xFF10B981)
-                              : const Color(0xFFEF4444),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              if (!last)
-                const Divider(
-                  color: Color(0xFFF1F5F9),
-                  height: 1,
-                  indent: 16,
-                  endIndent: 16,
-                ),
-            ],
-          );
-        }).toList(),
-      ),
-    );
-  }
-}
-
-// ─────────────────────────────────────────────
-// NGO LIST
-// ─────────────────────────────────────────────
-class _NgoList extends StatelessWidget {
-  final List<_Ngo> ngos;
-  const _NgoList({required this.ngos});
-
-  Color _color(NgoVerification v) {
-    switch (v) {
-      case NgoVerification.verified:
-        return const Color(0xFF10B981);
-      case NgoVerification.pending:
-        return const Color(0xFFF59E0B);
-      case NgoVerification.rejected:
-        return const Color(0xFFEF4444);
-    }
-  }
-
-  String _label(NgoVerification v) {
-    switch (v) {
-      case NgoVerification.verified:
-        return 'VERIFIED';
-      case NgoVerification.pending:
-        return 'PENDING';
-      case NgoVerification.rejected:
-        return 'REJECTED';
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
-      ),
-      child: Column(
-        children: ngos.asMap().entries.map((e) {
-          final ngo = e.value;
-          final bool last = e.key == ngos.length - 1;
-          final Color c = _color(ngo.verification);
-          return Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 13,
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF8B5CF6).withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: const Icon(
-                        Icons.domain_rounded,
-                        color: Color(0xFF8B5CF6),
-                        size: 18,
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Text(
-                        ngo.name,
-                        style: const TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xFF1E293B),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: c.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: c.withOpacity(0.3)),
-                      ),
-                      child: Text(
-                        _label(ngo.verification),
-                        style: TextStyle(
-                          fontSize: 10,
-                          fontWeight: FontWeight.w700,
-                          color: c,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              if (!last)
-                const Divider(
-                  color: Color(0xFFF1F5F9),
-                  height: 1,
-                  indent: 16,
-                  endIndent: 16,
-                ),
-            ],
-          );
-        }).toList(),
-      ),
-    );
-  }
-}
-
-// ─────────────────────────────────────────────
-// DONATION OVERVIEW
-// ─────────────────────────────────────────────
-class _DonationOverview extends StatelessWidget {
-  const _DonationOverview();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
-      ),
-      child: Column(
-        children: [
-          _DonationRow(
-            label: 'Total Donations Received',
-            value: 'PKR 8,240,000',
-            color: const Color(0xFF10B981),
-            progress: 1.0,
-          ),
-          const SizedBox(height: 12),
-          _DonationRow(
-            label: 'Completed Donations',
-            value: 'PKR 6,100,000',
-            color: const Color(0xFF3B82F6),
-            progress: 0.74,
-          ),
-          const SizedBox(height: 12),
-          _DonationRow(
-            label: 'Pending Donations',
-            value: 'PKR 2,140,000',
-            color: const Color(0xFFF59E0B),
-            progress: 0.26,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _DonationRow extends StatelessWidget {
-  final String label;
-  final String value;
-  final Color color;
-  final double progress;
-  const _DonationRow({
-    required this.label,
-    required this.value,
-    required this.color,
-    required this.progress,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              label,
-              style: const TextStyle(fontSize: 12, color: Color(0xFF64748B)),
-            ),
-            Text(
-              value,
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w700,
-                color: color,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 6),
-        ClipRRect(
-          borderRadius: BorderRadius.circular(4),
-          child: LinearProgressIndicator(
-            value: progress,
-            minHeight: 7,
-            backgroundColor: const Color(0xFFE2E8F0),
-            valueColor: AlwaysStoppedAnimation<Color>(color),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-// ─────────────────────────────────────────────
-// SYSTEM LOGS
-// ─────────────────────────────────────────────
-class _LogsList extends StatelessWidget {
-  final List<_LogEntry> logs;
-  const _LogsList({required this.logs});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
-      ),
-      child: Column(
-        children: logs.asMap().entries.map((e) {
-          final log = e.value;
-          final bool last = e.key == logs.length - 1;
-          return Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 12,
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: log.color.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Icon(log.icon, color: log.color, size: 16),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Text(
-                        log.event,
-                        style: const TextStyle(
-                          fontSize: 12,
-                          color: Color(0xFF374151),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      log.time,
-                      style: const TextStyle(
-                        fontSize: 10,
-                        color: Color(0xFF94A3B8),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              if (!last)
-                const Divider(
-                  color: Color(0xFFF1F5F9),
-                  height: 1,
-                  indent: 16,
-                  endIndent: 16,
-                ),
-            ],
-          );
-        }).toList(),
-      ),
-    );
-  }
-}
-
-// ─────────────────────────────────────────────
-// SHARED
-// ─────────────────────────────────────────────
 class _SectionLabel extends StatelessWidget {
   final String text;
   const _SectionLabel({required this.text});

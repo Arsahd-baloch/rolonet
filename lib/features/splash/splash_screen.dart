@@ -48,17 +48,18 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
   }
 
   void _init() async {
+    await Future.delayed(const Duration(seconds: 2));
     await ref.read(authProvider.notifier).loadUserFromStorage();
 
     final user = ref.read(authProvider).user;
+    final role = user?['role'];
 
-    print("USER FROM STORAGE: $user");
-
-    if (user != null) {
-      final role = user['role'];
-      AppRouter.toRoleDashboard(context, role);
+    if (user == null) {
+      // Not logged in → public landing
+      if (mounted) AppRouter.toLanding(context);
     } else {
-      AppRouter.toLanding(context);
+      // Logged in → go straight to their dashboard (including admin)
+      if (mounted) AppRouter.toRoleDashboard(context, role);
     }
   }
 
@@ -77,11 +78,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
           height: double.infinity,
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [
-                Color(0xFFDBEAFE),
-                AppTheme.lightBlue,
-                Colors.white,
-              ],
+              colors: [Color(0xFFDBEAFE), AppTheme.lightBlue, Colors.white],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
             ),
@@ -107,7 +104,12 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                     borderRadius: BorderRadius.circular(28),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(0xFF1E40AF).withOpacity(0.25),
+                        color: const Color.fromARGB(
+                          255,
+                          222,
+                          227,
+                          244,
+                        ).withValues(alpha: 0.25),
                         blurRadius: 24,
                         offset: const Offset(0, 8),
                       ),

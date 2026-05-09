@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/router/app_router.dart';
 import '../../core/theme/app_theme.dart';
+import '../auth/auth_provider.dart';
 
 class LandingScreen extends StatelessWidget {
   const LandingScreen({super.key});
@@ -50,54 +52,53 @@ class _Header extends StatelessWidget {
         ],
       ),
       child: Row(
-  children: [
-    Expanded(
-      child: Row(
         children: [
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: const Color(0xFF1E40AF),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: const Icon(
-              Icons.favorite_rounded,
-              color: Colors.white,
-              size: 18,
-            ),
-          ),
-          const SizedBox(width: 10),
-          const Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          Expanded(
+            child: Row(
               children: [
-                Text(
-                  'ReliefNet',
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w800,
-                    color: Color(0xFF1E293B),
-                    letterSpacing: -0.3,
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF1E40AF),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: const Icon(
+                    Icons.favorite_rounded,
+                    color: Colors.white,
+                    size: 18,
                   ),
                 ),
-                Text(
-                  'Connecting Aid. Delivering Hope.',
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: 10,
-                    color: Color(0xFF64748B),
-                    fontWeight: FontWeight.w400,
+                const SizedBox(width: 10),
+                const Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'ReliefNet',
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w800,
+                          color: Color(0xFF1E293B),
+                          letterSpacing: -0.3,
+                        ),
+                      ),
+                      Text(
+                        'Connecting Aid. Delivering Hope.',
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 10,
+                          color: Color(0xFF64748B),
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
           ),
-        ],
-      ),
-    ),
-    const SizedBox(width: 8),
-          // Login button
+          const SizedBox(width: 8),
           TextButton(
             onPressed: () => AppRouter.toLogin(context),
             style: TextButton.styleFrom(
@@ -110,7 +111,6 @@ class _Header extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 4),
-          // Register button
           ElevatedButton(
             onPressed: () => AppRouter.toRoleSelection(context),
             style: ElevatedButton.styleFrom(
@@ -155,15 +155,14 @@ class _HeroSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // Hero icon placeholder
           Container(
             width: 100,
             height: 100,
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.15),
+              color: Colors.white.withValues(alpha: 0.15),
               shape: BoxShape.circle,
               border: Border.all(
-                color: Colors.white.withOpacity(0.3),
+                color: Colors.white.withValues(alpha: 0.3),
                 width: 2,
               ),
             ),
@@ -174,19 +173,17 @@ class _HeroSection extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 24),
-          // Description
           Text(
             'ReliefNet connects donors, volunteers, NGOs, and beneficiaries into one unified humanitarian system.',
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 15,
-              color: Colors.white.withOpacity(0.9),
+              color: Colors.white.withValues(alpha: 0.9),
               height: 1.65,
               fontWeight: FontWeight.w400,
             ),
           ),
           const SizedBox(height: 28),
-          // Quick stats
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -223,7 +220,10 @@ class _HeroStat extends StatelessWidget {
         const SizedBox(height: 2),
         Text(
           label,
-          style: TextStyle(color: Colors.white.withOpacity(0.7), fontSize: 12),
+          style: TextStyle(
+            color: Colors.white.withValues(alpha: 0.7),
+            fontSize: 12,
+          ),
         ),
       ],
     );
@@ -237,7 +237,7 @@ class _VerticalDivider extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 20),
       width: 1,
       height: 32,
-      color: Colors.white.withOpacity(0.25),
+      color: Colors.white.withValues(alpha: 0.25),
     );
   }
 }
@@ -289,6 +289,7 @@ class _RoleCardsSection extends StatelessWidget {
           _RoleCard(
             icon: Icons.business_center_rounded,
             title: 'NGO',
+            expectedRole: 'ngo_admin',
             description: 'Manage campaigns and distribute aid',
             color: Color(0xFF3B82F6),
           ),
@@ -296,6 +297,7 @@ class _RoleCardsSection extends StatelessWidget {
           _RoleCard(
             icon: Icons.volunteer_activism_rounded,
             title: 'Donor',
+            expectedRole: 'donor',
             description: 'Donate money, items, and support causes',
             color: Color(0xFF10B981),
           ),
@@ -303,6 +305,7 @@ class _RoleCardsSection extends StatelessWidget {
           _RoleCard(
             icon: Icons.people_rounded,
             title: 'Volunteer',
+            expectedRole: 'volunteer',
             description: 'Help in real-world relief operations',
             color: Color(0xFF8B5CF6),
           ),
@@ -310,6 +313,7 @@ class _RoleCardsSection extends StatelessWidget {
           _RoleCard(
             icon: Icons.health_and_safety_rounded,
             title: 'Beneficiary',
+            expectedRole: 'beneficiary',
             description: 'Request and receive assistance',
             color: Color(0xFFEF4444),
           ),
@@ -319,28 +323,62 @@ class _RoleCardsSection extends StatelessWidget {
   }
 }
 
-class _RoleCard extends StatelessWidget {
+// ── _RoleCard checks auth before navigating ──
+class _RoleCard extends ConsumerWidget {
   final IconData icon;
   final String title;
+  final String expectedRole;
   final String description;
   final Color color;
 
   const _RoleCard({
     required this.icon,
     required this.title,
+    required this.expectedRole,
     required this.description,
     required this.color,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Material(
       color: Colors.white,
       borderRadius: BorderRadius.circular(14),
       child: InkWell(
         borderRadius: BorderRadius.circular(14),
         onTap: () {
-          AppRouter.toRoleDashboard(context, title.toLowerCase());
+          final authState = ref.read(authProvider);
+
+          // ── Not logged in ──
+          if (authState.token == null) {
+            _showLoginRequiredDialog(context);
+            return;
+          }
+
+          final userRole = authState.user?['role'];
+
+          // ── Admin bypasses all role checks — goes to admin dashboard ──
+          if (userRole == 'admin') {
+            AppRouter.toRoleDashboard(context, 'admin');
+            return;
+          }
+
+          // ── Wrong role ──
+          if (userRole != expectedRole) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  'You are logged in as $userRole. Please login as $expectedRole to access this section.',
+                ),
+                backgroundColor: Colors.orange,
+                behavior: SnackBarBehavior.floating,
+              ),
+            );
+            return;
+          }
+
+          // ── Correct role — navigate ──
+          AppRouter.toRoleDashboard(context, userRole!);
         },
         child: Container(
           padding: const EdgeInsets.all(18),
@@ -350,17 +388,15 @@ class _RoleCard extends StatelessWidget {
           ),
           child: Row(
             children: [
-              // Icon container
               Container(
                 padding: const EdgeInsets.all(14),
                 decoration: BoxDecoration(
-                  color: color.withOpacity(0.1),
+                  color: color.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(icon, color: color, size: 28),
               ),
               const SizedBox(width: 16),
-              // Text
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -393,6 +429,43 @@ class _RoleCard extends StatelessWidget {
       ),
     );
   }
+
+  // ── Login required dialog ──
+  void _showLoginRequiredDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: const Text(
+          'Login Required',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
+        ),
+        content: const Text(
+          'Please login to access your dashboard.',
+          textAlign: TextAlign.center,
+          style: TextStyle(color: Colors.grey),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+              AppRouter.toLogin(context);
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppTheme.primaryBlue,
+              foregroundColor: Colors.white,
+            ),
+            child: const Text('Login'),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 // ─────────────────────────────────────────────
@@ -419,7 +492,7 @@ class _AboutSection extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF59E0B).withOpacity(0.1),
+                  color: const Color(0xFFF59E0B).withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: const Icon(
@@ -481,7 +554,7 @@ class _Footer extends StatelessWidget {
             'Connecting Aid. Delivering Hope.',
             style: TextStyle(
               fontSize: 12,
-              color: Colors.white.withOpacity(0.6),
+              color: Colors.white.withValues(alpha: 0.6),
             ),
           ),
           const SizedBox(height: 16),
@@ -489,7 +562,7 @@ class _Footer extends StatelessWidget {
             '© 2025 ReliefNet. All rights reserved.',
             style: TextStyle(
               fontSize: 11,
-              color: Colors.white.withOpacity(0.4),
+              color: Colors.white.withValues(alpha: 0.4),
             ),
           ),
         ],

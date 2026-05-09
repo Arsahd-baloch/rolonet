@@ -9,17 +9,15 @@ import '../../features/volunteer/volunteer_dashboard_screen.dart';
 import '../../features/ngo/ngo_dashboard_screen.dart';
 import '../../features/beneficiary/beneficiary_screen.dart';
 import '../../features/admin/admin_dashboard_screen.dart';
+import '../../features/donor/presentation/donor_campaign_list_screen.dart';
+import '../../features/donor/presentation/donor_campaign_detail_screen.dart';
+import '../../features/donor/presentation/donor_history_screen.dart';
 
-/// Mock current user role — set this after login (UI only, no backend).
-/// Possible values: 'donor' | 'volunteer' | 'ngo' | 'beneficiary' | 'admin' | null
 String? currentUserRole;
 
-/// Central navigation helper for ReliefNet.
-/// All navigation is done via [Navigator.push] + [MaterialPageRoute].
 class AppRouter {
   AppRouter._();
 
-  // ─── Route name constants ────────────────
   static const String splash = '/';
   static const String landing = '/landing';
   static const String roleSelect = '/role-selection';
@@ -30,8 +28,6 @@ class AppRouter {
   static const String ngoDash = '/dashboard/ngo';
   static const String beneficiary = '/dashboard/beneficiary';
   static const String adminDash = '/dashboard/admin';
-
-  // ─── Navigation methods ──────────────────
 
   static void toSplash(BuildContext context) {
     Navigator.of(context).pushAndRemoveUntil(
@@ -65,49 +61,76 @@ class AppRouter {
     ).push(MaterialPageRoute(builder: (_) => RegisterScreen(role: role)));
   }
 
+  // ── Dashboards all use pushAndRemoveUntil ──
+  // This clears back stack so user cannot go back to landing/login
+
   static void toDonorDashboard(BuildContext context) {
-    Navigator.of(
-      context,
-    ).push(MaterialPageRoute(builder: (_) => const DonorDashboardScreen()));
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (_) => const DonorDashboardScreen()),
+      (_) => false,
+    );
   }
 
   static void toVolunteerDashboard(BuildContext context) {
-    Navigator.of(
-      context,
-    ).push(MaterialPageRoute(builder: (_) => const VolunteerDashboardScreen()));
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (_) => const VolunteerDashboardScreen()),
+      (_) => false,
+    );
   }
 
   static void toNgoDashboard(BuildContext context) {
-    Navigator.of(
-      context,
-    ).push(MaterialPageRoute(builder: (_) => const NgoDashboardScreen()));
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (_) => const NgoDashboardScreen()),
+      (_) => false,
+    );
   }
 
   static void toBeneficiaryScreen(BuildContext context) {
-    Navigator.of(
-      context,
-    ).push(MaterialPageRoute(builder: (_) => const BeneficiaryScreen()));
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (_) => const BeneficiaryScreen()),
+      (_) => false,
+    );
   }
 
   static void toAdminDashboard(BuildContext context) {
-    Navigator.of(
-      context,
-    ).push(MaterialPageRoute(builder: (_) => const AdminDashboardScreen()));
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (_) => const AdminDashboardScreen()),
+      (_) => false,
+    );
   }
 
-  /// Role-based routing after mock login.
-  /// Pass a role string and the user is sent to the correct dashboard.
+  static void toDonorCampaignList(BuildContext context) {
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (_) => const DonorCampaignListScreen()));
+  }
+
+  static void toDonorCampaignDetail(BuildContext context, int campaignId) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => DonorCampaignDetailScreen(campaignId: campaignId),
+      ),
+    );
+  }
+
+  static void toDonorHistory(BuildContext context) {
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (_) => const DonorHistoryScreen()));
+  }
+
+  // ── Role-based routing after login ──
   static void toRoleDashboard(BuildContext context, String role) {
     currentUserRole = role;
     switch (role) {
       case 'donor':
         toDonorDashboard(context);
         break;
+      case 'ngo_admin':
+        toNgoDashboard(context);
+        break;
       case 'volunteer':
         toVolunteerDashboard(context);
-        break;
-      case 'ngo':
-        toNgoDashboard(context);
         break;
       case 'beneficiary':
         toBeneficiaryScreen(context);
@@ -118,5 +141,11 @@ class AppRouter {
       default:
         toLanding(context);
     }
+  }
+
+  // ── Logout — clears everything, goes to landing ──
+  static void logout(BuildContext context) {
+    currentUserRole = null;
+    toLanding(context);
   }
 }
